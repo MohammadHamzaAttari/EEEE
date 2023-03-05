@@ -287,41 +287,70 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [
   {
-    label: "Inspiration",
+    label: "New",
     children: [
       {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
+        label: "Build and Price",
+        subLabel: "Find the car build and price",
         href: "#",
       },
       {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
+        label: "Deal",
+        subLabel: "Find our Best Deals",
+        href: "#",
+      },
+      {
+        label: "New Car Listing",
+        subLabel: "Search more than 1k",
         href: "#",
       },
     ],
   },
   {
-    label: "Find Work",
+    label: "Used",
     children: [
       {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
+        label: "Buy online",
+        subLabel: "Buy online Cars with Secure transection",
         href: "#",
       },
       {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
+        label: "Used Cars Search",
+        subLabel: "Search more than 1k",
+        href: "#",
+      },
+      {
+        label: "Used Car Listing",
+        subLabel: "View a list of new Cars",
         href: "#",
       },
     ],
   },
   {
-    label: "Learn Design",
-    href: "#",
+    label: "Research",
+    children: [
+      {
+        label: "Cars Review",
+        href: "#",
+      },
+      {
+        label: "Cars Ranking",
+        href: "#",
+      },
+      {
+        label: "Compare Cars",
+
+        href: "#",
+      },
+      {
+        label: "Cars loan Calculator",
+
+        href: "#",
+      },
+    ],
   },
   {
-    label: "Hire Designers",
+    label: "Sell Your Car",
     href: "#",
   },
 ];

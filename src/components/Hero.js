@@ -10,9 +10,12 @@ import {
   Icon,
   IconButton,
   createIcon,
-  IconProps,
   useColorModeValue,
+  Input,
 } from "@chakra-ui/react";
+import Search from "./Search";
+import Sell from "../Sell";
+import Research from "./Research";
 
 export default function CallToActionWithVideo() {
   return (
@@ -73,7 +76,7 @@ export default function CallToActionWithVideo() {
           <Heading
             lineHeight={1.1}
             fontWeight={600}
-            fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
+            fontSize={{ base: "sm", sm: "lg", lg: "4xl" }}
           >
             <Text
               as={"span"}
@@ -89,14 +92,20 @@ export default function CallToActionWithVideo() {
                 zIndex: -1,
               }}
             >
-              Find the Car,
-            </Text>
-            <br />
-            <Text as={"span"} color={"red.400"}>
-              you want, your way!
+              Find the Car You Want, Your Way!
             </Text>
           </Heading>
-
+          <Heading
+            lineHeight={1.1}
+            fontWeight={400}
+            fontSize={{ base: "sm", sm: "lg", lg: "2xl" }}
+            mt="20px!important"
+          >
+            <Text as={"span"} color={"red.400"}>
+              Then, build your deals to fit your needs
+            </Text>
+          </Heading>
+          <Search />
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={{ base: "column", sm: "row" }}
@@ -110,20 +119,16 @@ export default function CallToActionWithVideo() {
               bg={"red.400"}
               _hover={{ bg: "red.500" }}
             >
-              Get started
+              Shop New
             </Button>
-            <Button
-              rounded={"full"}
-              size={"lg"}
-              fontWeight={"normal"}
-              px={6}
-              leftIcon={<PlayIcon h={4} w={4} color={"gray.300"} />}
-            >
-              How It Works
+            <Button rounded={"full"} size={"lg"} fontWeight={"normal"} px={6}>
+              Shop Used
             </Button>
           </Stack>
+          <Sell />
         </Stack>
       </Stack>
+      <Research />
     </Container>
   );
 }
