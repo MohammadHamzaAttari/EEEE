@@ -66,11 +66,9 @@ export const Search = () => {
         />
         <Input
           focusBorderColor='red.300'
-          value={company}
           type='text'
           onClick={handleModal}
           border='1px solid #949494'
-          onChange={(e) => handleChange(e.target.value)}
           placeholder='Search Company, Model or Type'
           _placeholder={{ opacity: 1, color: "gray.500" }}
         />
@@ -83,6 +81,23 @@ export const Search = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
+            <InputGroup
+              borderRadius={5}
+              width={{ base: "100%", md: "100%", lg: "70%" }}>
+              <InputLeftElement
+                pointerEvents='none'
+                children={<Search2Icon color='gray.600' />}
+              />
+              <Input
+                focusBorderColor='red.300'
+                value={company}
+                type='text'
+                border='1px solid #949494'
+                onChange={(e) => handleChange(e.target.value)}
+                placeholder='Search Company, Model or Type'
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+            </InputGroup>
             <SearchResultList result={result} />
           </ModalBody>
           <ModalFooter></ModalFooter>
