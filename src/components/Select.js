@@ -68,10 +68,7 @@ export default function Selection() {
           <option value='saturn'>Saturn</option>
           <option value='scion'>Scion</option>
           <option value='smart'>smart</option>
-          <option value='suzuki' selected>
-            Suzuki
-          </option>
-          ;
+          <option value='suzuki'>Suzuki</option>;
         </optgroup>
       </Select>
       <Select placeholder='Model'>
