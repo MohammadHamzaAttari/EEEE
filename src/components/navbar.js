@@ -25,13 +25,12 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import Avater from "./Avater";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const { loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <Box>
@@ -91,38 +90,32 @@ export default function WithSubnavigation() {
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
-          {isAuthenticated ? (
-            <HStack>
-              <Avater />
-              <Button
-                as={"a"}
-                display={{ base: "none", md: "inline-flex" }}
-                fontSize={"sm"}
-                fontWeight={600}
-                color={"white"}
-                bg={"red.300"}
-                onClick={() =>
-                  logout({
-                    logoutParams: { returnTo: window.location.origin },
-                  })
-                }
-                _hover={{
-                  bg: "pink.300",
-                }}>
-                Logout
-              </Button>
-            </HStack>
-          ) : (
+
+          <HStack>
+            <Avater />
             <Button
               as={"a"}
+              display={{ base: "none", md: "inline-flex" }}
               fontSize={"sm"}
               fontWeight={600}
               color={"white"}
               bg={"red.300"}
-              onClick={() => loginWithRedirect()}>
-              Login
+              _hover={{
+                bg: "pink.300",
+              }}>
+              Logout
             </Button>
-          )}
+          </HStack>
+
+          <Button
+            as={"a"}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={"red.300"}
+            colorScheme='teal'>
+            <Link href='/registerUser'>Register</Link>
+          </Button>
         </Stack>
       </Flex>
 
@@ -342,7 +335,7 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Sell Your Car",
-    href: "#",
+    label: "Dealers",
+    href: "/dealerportal",
   },
 ];

@@ -6,11 +6,12 @@ import React from "react";
 import { Box, Container } from "@chakra-ui/react";
 import { FileUpload } from "../FileUpload";
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props.data + "Home");
   return (
     <Box>
       <WithSubnavigation />
-      <CallToActionWithVideo />
+      <CallToActionWithVideo data={props.data} />
 
       <LargeWithLogoCentered />
     </Box>

@@ -6,12 +6,11 @@ import { Auth0Provider } from "@auth0/auth0-react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Auth0Provider
-    domain="dev-gpkwkajdrtnjczym.us.auth0.com"
-    clientId="LrTtuLA2yoWz2sdc0NRwaWfylLXO9Frf"
+    domain='dev-gpkwkajdrtnjczym.us.auth0.com'
+    clientId='LrTtuLA2yoWz2sdc0NRwaWfylLXO9Frf'
     authorizationParams={{
       redirect_uri: window.location.origin,
-    }}
-  >
+    }}>
     <ChakraProvider>
       <App />
     </ChakraProvider>

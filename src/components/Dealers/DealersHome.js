@@ -1,17 +1,16 @@
-import WithSubnavigation from "./navbar";
+import WithSubnavigation from "../navbar";
 //import CallToActionWithVideo from "./Hero";
 import DealersHero from "./DealersHero";
-import LargeWithLogoCentered from "./Footer";
+import LargeWithLogoCentered from "../Footer";
 import React from "react";
 import { Box, Container } from "@chakra-ui/react";
-import DealersSignUp from "./DealersSignUp";
 
 export default function DealersHome() {
   return (
     <Box>
       <WithSubnavigation />
       <DealersHero />
-      <DealersSignUp />
+
       <LargeWithLogoCentered />
     </Box>
   );

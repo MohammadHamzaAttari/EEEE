@@ -14,6 +14,7 @@ import {
   AspectRatio,
   Input,
 } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { Search } from "./Search";
 import Sell from "../Sell";
 import Research from "./Research";
@@ -22,7 +23,7 @@ import ReactPlayer from "react-player";
 import { useState } from "react";
 import { SearchResultList } from "./SearchResultList";
 
-export default function CallToActionWithVideo() {
+export default function CallToActionWithVideo(props) {
   const Player = () => {
     return (
       <ReactPlayer
@@ -33,7 +34,7 @@ export default function CallToActionWithVideo() {
       />
     );
   };
-
+  console.log(props.data + "Hero");
   return (
     <Container maxW={"7xl"}>
       <Stack
@@ -115,24 +116,21 @@ export default function CallToActionWithVideo() {
               Then, build your deals to fit your needs
             </Text>
           </Heading>
-          <Search />
+          <Search data={props.data} />
 
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={{ base: "column", sm: "row" }}>
-            <Button
-              rounded={"full"}
-              size={"lg"}
-              fontWeight={"normal"}
-              px={6}
-              colorScheme={"red"}
-              bg={"red.400"}
-              _hover={{ bg: "red.500" }}>
-              Shop New
-            </Button>
-            <Button rounded={"full"} size={"lg"} fontWeight={"normal"} px={6}>
-              Shop Used
-            </Button>
+            <Tabs colorScheme='red.400'>
+              <TabList>
+                <Tab>Shop New</Tab>
+                <Tab>Shop Used</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel></TabPanel>
+                <TabPanel></TabPanel>
+              </TabPanels>
+            </Tabs>
           </Stack>
           <Sell />
         </Stack>

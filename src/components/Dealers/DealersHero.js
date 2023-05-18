@@ -8,6 +8,7 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  Link,
 } from "@chakra-ui/react";
 
 export default function DealersHero() {
@@ -47,7 +48,7 @@ export default function DealersHero() {
               _hover={{
                 bg: "green.500",
               }}>
-              Get Started
+              <Link href='./registerDealer'>Get Started</Link>
             </Button>
             <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
               Learn more

@@ -6,6 +6,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
+import { Search2Icon } from "@chakra-ui/icons";
 import {
   Modal,
   ModalOverlay,
@@ -18,43 +19,18 @@ import {
   btnRef,
 } from "@chakra-ui/react";
 
-import { Search2Icon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
 import { SearchResultList } from "./SearchResultList";
 
-export const Search = () => {
+export function Search(props) {
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const [company, setCompany] = React.useState([]);
-  const [result, setResult] = React.useState([]);
-
+  console.log(props.data + "Search");
   const btnRef = React.useRef();
 
-  const fetchHander = (value) => {
-    fetch("https://localhost:44383/api/Companies/search")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        const result = data.filter((item) => {
-          return (
-            value &&
-            item &&
-            item.name &&
-            item.name.toLowerCase().includes(value)
-          );
-        });
-        setResult(result);
-      });
-  };
-
-  const handleModal = () => {
+  function handleModal() {
     onOpen();
-  };
+  }
 
-  const handleChange = (value) => {
-    setCompany(value);
-    fetchHander(value);
-  };
   return (
     <>
       <InputGroup
@@ -77,32 +53,19 @@ export const Search = () => {
         onClose={onClose}
         finalFocusRef={btnRef}
         isOpen={isOpen}
-        scrollBehavior>
+        colorScheme='whiteAlpha'
+        scrollBehavior
+        size={{ base: "xs", sm: "sm", md: "md", lg: "lg" }}>
         <ModalOverlay />
+
         <ModalContent>
+          <ModalCloseButton />
           <ModalBody>
-            <InputGroup
-              borderRadius={5}
-              width={{ base: "100%", md: "100%", lg: "70%" }}>
-              <InputLeftElement
-                pointerEvents='none'
-                children={<Search2Icon color='gray.600' />}
-              />
-              <Input
-                focusBorderColor='red.300'
-                value={company}
-                type='text'
-                border='1px solid #949494'
-                onChange={(e) => handleChange(e.target.value)}
-                placeholder='Search Company, Model or Type'
-                _placeholder={{ opacity: 1, color: "gray.500" }}
-              />
-            </InputGroup>
-            <SearchResultList result={result} />
+            <SearchResultList fetch={props.data} />
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>
   );
-};
+}
