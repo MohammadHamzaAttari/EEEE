@@ -2,14 +2,15 @@ import React from "react";
 import WithSubnavigation from "../navbar";
 import LargeWithLogoCentered from "../Footer";
 import { Box } from "@chakra-ui/react";
-import ModelsDetailsCars from "../ModelsDetailsCars";
+import Modelshero from "../Modelshero";
 
 export default function ModelDetails(props) {
-  console.log(props.data);
+  const data = props.dataId;
+
   return (
     <Box>
       <WithSubnavigation />
-      <ModelsDetailsCars />
+      <Modelshero fetch={data} />
       <LargeWithLogoCentered />
     </Box>
   );

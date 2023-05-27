@@ -7,7 +7,6 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -18,6 +17,7 @@ import {
   HStack,
   Spinner,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -59,7 +59,7 @@ export default function WithSubnavigation() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Link
-            href={"/"}
+            to={"/"}
             role={"group"}
             display={"block"}
             p={2}
@@ -139,7 +139,7 @@ const DesktopNav = () => {
             <PopoverTrigger>
               <Link
                 p={2}
-                href={navItem.href ?? "#"}
+                to={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
@@ -316,7 +316,7 @@ const NAV_ITEMS = [
     children: [
       {
         label: "Cars Review",
-        href: "#",
+        href: "/google",
       },
       {
         label: "Cars Ranking",
@@ -336,6 +336,6 @@ const NAV_ITEMS = [
   },
   {
     label: "Dealers",
-    href: "/dealerportal",
+    href: "/dealerHome",
   },
 ];

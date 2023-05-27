@@ -16,6 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function RegisterUser() {
@@ -28,6 +29,7 @@ export default function RegisterUser() {
   const [validEmail, setValidEmail] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const toast = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +45,7 @@ export default function RegisterUser() {
         console.log(value.response.data.error);
       }
     };
-    fetch("https://localhost:44383/api/Account/register", {
+    fetch("http://localhost:5200/api/Account/register", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -61,6 +63,7 @@ export default function RegisterUser() {
             duration: 9000,
             isClosable: true,
           });
+          navigate("/login");
           response.json();
         } else {
           // Error!

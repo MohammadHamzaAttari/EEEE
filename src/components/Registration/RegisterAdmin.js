@@ -12,9 +12,9 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
   useToast,
 } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -28,7 +28,7 @@ export default function RegisterAdmin() {
   const [validEmail, setValidEmail] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const toast = useToast();
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     let store = {
@@ -38,13 +38,14 @@ export default function RegisterAdmin() {
       Email: email,
       PhoneNumber: phoneNumber,
     };
-
-    fetch("https://localhost:44383/api/Account/registerAdmin", {
+    fetch("http://localhost:5200/api/Account/registerAdmin", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       credentials: "same-origin",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+      },
       body: JSON.stringify(store),
     })
       .then((response) => {
@@ -57,6 +58,7 @@ export default function RegisterAdmin() {
             duration: 9000,
             isClosable: true,
           });
+          navigate("/registerAdmin/loginAdmin");
         } else {
           // Error!
           toast({
@@ -79,10 +81,10 @@ export default function RegisterAdmin() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Register
+            Admin
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            to see all project
           </Text>
         </Stack>
         <Box
@@ -167,7 +169,7 @@ export default function RegisterAdmin() {
               <Stack pt={6}>
                 <Text align={"center"}>
                   Already a user?{" "}
-                  <Link href={"/login"} color={"blue.400"}>
+                  <Link to={"/registerAdmin/loginAdmin"} color={"blue.400"}>
                     Login
                   </Link>
                 </Text>

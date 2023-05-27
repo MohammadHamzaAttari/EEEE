@@ -12,11 +12,12 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
   useToast,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterDealer() {
   const { isLoading, setIsLoading } = useState(false);
@@ -28,6 +29,7 @@ export default function RegisterDealer() {
   const [validEmail, setValidEmail] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const toast = useToast();
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setValidEmail(
       email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) ? true : false
@@ -44,7 +46,7 @@ export default function RegisterDealer() {
       PhoneNumber: phoneNumber,
     };
 
-    fetch("https://localhost:44383/api/Account/registerDealer", {
+    fetch("http://localhost:5200/api/Account/registerDealer", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -62,6 +64,7 @@ export default function RegisterDealer() {
             duration: 9000,
             isClosable: true,
           });
+          navigate("/dealerHome/registerDealer/loginDealer");
         } else {
           // Error!
           toast({
@@ -84,10 +87,10 @@ export default function RegisterDealer() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Register
+            Dealer
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            Register to Get Worldwide Client
           </Text>
         </Stack>
         <Box
@@ -172,7 +175,9 @@ export default function RegisterDealer() {
               <Stack pt={6}>
                 <Text align={"center"}>
                   Already a user?{" "}
-                  <Link href={"/login"} color={"blue.400"}>
+                  <Link
+                    to={"/dealerHome/registerDealer/loginDealer"}
+                    style={{ color: "blue", underline: "true" }}>
                     Login
                   </Link>
                 </Text>

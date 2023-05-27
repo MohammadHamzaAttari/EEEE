@@ -1,33 +1,57 @@
-import React, { useContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import WithSubnavigation from "./components/navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NoPage from "./components/NoPage";
 import Home from "./components/Pages/Home";
 import { Container } from "@chakra-ui/react";
 import DealersHome from "./components/Dealers/DealersHome";
-
+import Admin from "./components/Admin/Admin";
 import ModelDetails from "./components/Pages/ModelDetails";
 import Login from "./components/Registration/Login";
 import RegisterUser from "./components/Registration/RegisterUser";
 import RegisterAdmin from "./components/Registration/RegisterAdmin";
 import RegisterDealer from "./components/Registration/RegisterDealer";
-
+import DealersPortal from "./components/Dealers/DealersPortal";
+import LoginDealer from "./components/Dealers/LoginDealer";
+import AdminLogin from "./components/Admin/AdminLogin";
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/modelDetails' element={<ModelDetails />} />
-        <Route path='/dealerportal' element={<DealersHome />} />
-        <Route path='/registerUser' element={<RegisterUser />} />
-        <Route path='/registerDealer' element={<RegisterDealer />} />
-        <Route path='/registerAdmin' element={<RegisterAdmin />} />
+  const USER_TYPES = {
+    PUBLIC: "Public user",
+    NORMAL_USER: "Normal user",
+    ADMIN_USER: "Admin user",
+  };
+  const CURRENT_USER_TYPE = USER_TYPES.PUBLIC;
+  const [data, setData] = useState();
+  const handleData = (v) => {
+    setData(v);
+  };
 
-        <Route path='*' element={<NoPage></NoPage>} />
-      </Routes>
-    </Router>
+  return (
+    <Routes>
+      <Route path='/' element={<Home fetch={handleData} />} />
+
+      <Route path='/login' element={<Login />} />
+      <Route path='/modelDetails' element={<ModelDetails dataId={data} />} />
+
+      <Route path='/registerUser' element={<RegisterUser />} />
+
+      <Route path='/dealerHome' element={<DealersHome />} />
+      <Route path='/dealerHome/registerDealer' element={<RegisterDealer />} />
+      <Route
+        path='/dealerHome/registerDealer/loginDealer'
+        element={<LoginDealer />}
+      />
+      <Route path='/dealersPortal' element={<DealersPortal />} />
+
+      <Route path='/registerAdmin' element={<RegisterAdmin />} />
+      <Route path='/registerAdmin/loginAdmin' element={<AdminLogin />} />
+      <Route path='/admin' element={<Admin />} />
+      <Route path='*' element={<NoPage></NoPage>} />
+    </Routes>
   );
+}
+function PublicElement({ childern }) {
+  return <>{childern}</>;
 }
 
 export default App;

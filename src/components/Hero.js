@@ -34,7 +34,9 @@ export default function CallToActionWithVideo(props) {
       />
     );
   };
-  console.log(props.data + "Hero");
+  const handleData = (v) => {
+    props.fetch(v);
+  };
   return (
     <Container maxW={"7xl"}>
       <Stack
@@ -116,7 +118,7 @@ export default function CallToActionWithVideo(props) {
               Then, build your deals to fit your needs
             </Text>
           </Heading>
-          <Search data={props.data} />
+          <Search fetch={handleData} />
 
           <Stack
             spacing={{ base: 4, sm: 6 }}

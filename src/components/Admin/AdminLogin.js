@@ -6,26 +6,24 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
   Image,
   useToast,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
 
-export default function Login() {
+export default function AdminLogin() {
   const history = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const store = { Email: email, Password: password };
   const toast = useToast();
+  const [result, setResult] = useState();
   const handleSignIn = () => {
     fetch("http://localhost:5200/api/Account/login", {
       method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(store),
     })
@@ -39,7 +37,12 @@ export default function Login() {
             duration: 9000,
             isClosable: true,
           });
-          history("/");
+          var value = response.headers.get("Authorization");
+          var name = response.headers.get("FirstName");
+
+          localStorage.setItem("jwt", value);
+          localStorage.setItem("firstName", name);
+          history("/admin");
         } else {
           // Error!
           toast({
@@ -53,6 +56,7 @@ export default function Login() {
       })
       .catch((err) => {});
   };
+
   return (
     <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
       <Flex p={8} flex={1} align={"center"} justify={"center"}>

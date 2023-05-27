@@ -7,11 +7,13 @@ import { Box, Container } from "@chakra-ui/react";
 import { FileUpload } from "../FileUpload";
 
 export default function Home(props) {
-  console.log(props.data + "Home");
+  const handleData = (v) => {
+    props.fetch(v);
+  };
   return (
     <Box>
       <WithSubnavigation />
-      <CallToActionWithVideo data={props.data} />
+      <CallToActionWithVideo fetch={handleData} />
 
       <LargeWithLogoCentered />
     </Box>

@@ -6,12 +6,11 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
   Image,
   useToast,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
 
 export default function Login() {
@@ -39,7 +38,12 @@ export default function Login() {
             duration: 9000,
             isClosable: true,
           });
-          history("/");
+          var value = response.headers.get("Authorization");
+          var name = response.headers.get("FirstName");
+
+          localStorage.setItem("jwt", value);
+          localStorage.setItem("firstName", name);
+          history("/dealersPortal");
         } else {
           // Error!
           toast({

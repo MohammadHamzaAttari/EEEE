@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Input,
   InputGroup,
@@ -24,13 +24,14 @@ import { SearchResultList } from "./SearchResultList";
 
 export function Search(props) {
   const { onOpen, isOpen, onClose } = useDisclosure();
-  console.log(props.data + "Search");
   const btnRef = React.useRef();
 
   function handleModal() {
     onOpen();
   }
-
+  const handleData = (v) => {
+    props.fetch(v);
+  };
   return (
     <>
       <InputGroup
@@ -61,7 +62,7 @@ export function Search(props) {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody>
-            <SearchResultList fetch={props.data} />
+            <SearchResultList fetch={handleData} />
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>

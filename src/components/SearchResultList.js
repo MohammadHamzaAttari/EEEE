@@ -1,9 +1,10 @@
-import React from "react";
-import { Button, Link, SimpleGrid, VStack } from "@chakra-ui/react";
+import React, { useContext } from "react";
+import { Button, SimpleGrid, VStack } from "@chakra-ui/react";
 import { Divider, Box } from "@chakra-ui/react";
 import ModelDetails from "./Pages/ModelDetails";
 import { Search2Icon } from "@chakra-ui/icons";
-
+import { ModelId } from "../App";
+import { Link } from "react-router-dom";
 import {
   Input,
   InputGroup,
@@ -15,11 +16,11 @@ import {
 export function SearchResultList(props) {
   const [result, setResult] = React.useState([]);
   const [company, setCompany] = React.useState([]);
+
   //value send to modelDetails
-  const [value, setValue] = React.useState("");
 
   const fetchHander = (value) => {
-    fetch("https://localhost:44383/api/Companies/search")
+    fetch("http://localhost:5200/api/Companies/search")
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -37,6 +38,7 @@ export function SearchResultList(props) {
           );
         });
         setResult(result);
+        console.log(result);
       });
   };
   const handleChange = (value) => {
@@ -44,9 +46,9 @@ export function SearchResultList(props) {
     fetchHander(value.toLowerCase());
   };
 
-  const handleFetch = (value) => {
-    setValue(value);
-  };
+  function handleFetch(value) {
+    props.fetch(value);
+  }
   return (
     <>
       <InputGroup
@@ -69,31 +71,13 @@ export function SearchResultList(props) {
 
       <VStack direction='row' p={0} alignItem='left'>
         {result.map((results) => {
-          const title = results.name;
-          var Models = results.models.map((model) => {
-            return (
-              <Link
-                key={model.id}
-                href='/modelDetails'
-                onClick={() => handleFetch(model.id)}>
-                {model.name}
-              </Link>
-            );
-          });
           return (
-            <>
-              <SimpleGrid color='blackAlpha.700' fontWeight='bold'>
-                <Box pl='2' area={"header"}>
-                  <Button colorScheme={"telegram"}> {title}</Button>
-                </Box>
-                <Divider orientation='horizontal' />
-                <SimpleGrid>
-                  {Models.map((ex) => {
-                    return <Button colorScheme={"teal"}>{ex} </Button>;
-                  })}
-                </SimpleGrid>
-              </SimpleGrid>
-            </>
+            <Link
+              key={results.id}
+              to='/modelDetails'
+              onClick={() => handleFetch(results.id)}>
+              {results.name}
+            </Link>
           );
         })}
       </VStack>

@@ -1,20 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
-import { Auth0Provider } from "@auth0/auth0-react";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Auth0Provider
-    domain='dev-gpkwkajdrtnjczym.us.auth0.com'
-    clientId='LrTtuLA2yoWz2sdc0NRwaWfylLXO9Frf'
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}>
+  <Router>
     <ChakraProvider>
       <App />
     </ChakraProvider>
-  </Auth0Provider>
+  </Router>
 );
 
 // If you want to start measuring performance in your app, pass a function
