@@ -47,6 +47,7 @@ import {
 } from "react-icons/fi";
 import { PostDealerForm } from "./PostDealerForm";
 import { useNavigate } from "react-router-dom";
+import PostBody from "./PostBody";
 
 const LinkItems = [
   { name: "Dashboard", icon: FiHome },
@@ -121,7 +122,13 @@ const NavItem = ({ icon, children, ...rest }) => {
     <>
       <Button
         w={"100%"}
-        onClick={children == "Upload" ? () => onOpen() : () => onClose()}>
+        onClick={
+          children == "Upload"
+            ? () => onOpen()
+            : children == "Update"
+            ? () => onOpen()
+            : null
+        }>
         <Flex
           align='center'
           p='4'
@@ -156,7 +163,13 @@ const NavItem = ({ icon, children, ...rest }) => {
           <ModalHeader>Post Model Data</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <PostDealerForm />
+            {children == "Upload" ? (
+              <PostBody />
+            ) : children == "Update" ? (
+              <PostDealerForm />
+            ) : children == "AllModels" ? (
+              <Admin />
+            ) : null}
           </ModalBody>
         </ModalContent>
       </Modal>
