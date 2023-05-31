@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { Button, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Button, SimpleGrid, VStack, Spinner } from "@chakra-ui/react";
 import { Divider, Box } from "@chakra-ui/react";
-import ModelDetails from "./Pages/ModelDetails";
+import ModelDetails from "./Pages/Models";
 import { Search2Icon } from "@chakra-ui/icons";
 import { ModelId } from "../App";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Heading,
   Text,
 } from "@chakra-ui/react";
@@ -16,7 +17,7 @@ import {
 export function SearchResultList(props) {
   const [result, setResult] = React.useState([]);
   const [company, setCompany] = React.useState([]);
-
+  let [loading, setLoading] = React.useState(false);
   //value send to modelDetails
 
   const fetchHander = (value) => {
@@ -24,8 +25,6 @@ export function SearchResultList(props) {
       .then((res) => {
         if (res.status === 200) {
           return res.json();
-        } else {
-          console.log("Create Account");
         }
       })
       .then((data) => {
@@ -38,10 +37,11 @@ export function SearchResultList(props) {
           );
         });
         setResult(result);
-        console.log(result);
+        setLoading(false);
       });
   };
   const handleChange = (value) => {
+    setLoading(true);
     setCompany(value);
     fetchHander(value.toLowerCase());
   };
@@ -62,22 +62,29 @@ export function SearchResultList(props) {
           focusBorderColor='red.300'
           value={company}
           type='text'
+          w='100%'
           border='1px solid #949494'
           onChange={(e) => handleChange(e.target.value)}
           placeholder='Search Company, Model or Type'
           _placeholder={{ opacity: 1, color: "gray.500" }}
         />
+        <InputRightElement
+          pointerEvents='none'
+          children={loading && <Spinner size='lg' color='red.400' />}
+        />
       </InputGroup>
 
-      <VStack direction='row' p={0} alignItem='left'>
+      <VStack direction='row' p={0}>
         {result.map((results) => {
           return (
-            <Link
-              key={results.id}
-              to='/modelDetails'
-              onClick={() => handleFetch(results.id)}>
-              {results.name}
-            </Link>
+            <>
+              <Link
+                key={results.id}
+                to='/models'
+                onClick={() => handleFetch(results.id)}>
+                {!loading && results.name}
+              </Link>
+            </>
           );
         })}
       </VStack>

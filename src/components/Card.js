@@ -10,29 +10,59 @@ import {
   Button,
   Heading,
   Divider,
+  SimpleGrid,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CardFun(props) {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(true);
+  useEffect(() => {
+    setIsLoading(false);
+  }, [props]);
+  const hanldeClick = () => {
+    localStorage.removeItem("modelIdForDetails");
+    localStorage.removeItem("modelImageForDetails");
+    localStorage.setItem("modelIdForDetails", props.id);
+    localStorage.setItem("modelImageForDetails", props.image);
+    navigate("/models/Details");
+  };
+
   return (
-    <Card maxW='sm' maxH={"md"} m={"4px"} mt={"10px"}>
-      <CardBody>
-        <Image
-          src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-          alt='Green double couch with wooden legs'
-          borderRadius='lg'
-        />
-        <Stack mt='6' spacing='3'>
-          <Heading size='md'>{props.name}</Heading>
-          <Text>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-          </Text>
-          <Text color='blue.600' fontSize='2xl'>
-            {props.price}
-          </Text>
-        </Stack>
-      </CardBody>
-    </Card>
+    <>
+      {isLoading ? (
+        <Spinner size={"xl"} color='red.500' />
+      ) : (
+        <Card maxW='sm' maxH={"md"} m={"4px"} mt={"10px"}>
+          <CardHeader padding={0}>
+            <Image
+              src={`data:image/jpeg;base64,${props.image}`}
+              alt='Green double couch with wooden legs'
+              borderRadius='lg'
+            />
+          </CardHeader>
+          <CardBody>
+            <Stack mt='2' spacing='3'>
+              <Heading size='md'>{props.name}</Heading>
+
+              <Text color='red.400' fontSize='2xl'>
+                $ {props.price}
+              </Text>
+            </Stack>
+          </CardBody>
+          <Center>
+            <CardFooter padding={2}>
+              <Button bgColor='red.300' onClick={hanldeClick}>
+                See Details
+              </Button>
+            </CardFooter>
+          </Center>
+        </Card>
+      )}
+    </>
   );
 }
 

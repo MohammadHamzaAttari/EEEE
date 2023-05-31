@@ -28,13 +28,13 @@ export function PostDealerForm() {
   const [show, setShow] = React.useState(false);
   const [progress, setProgress] = useState(20);
   const [company, setCompany] = useState();
+  const [image, setImage] = useState();
+  const [selectValue, selectedValue] = useState();
   const [formData, setFormData] = useState({
     Name: "",
     Price: "",
-    CompanyId: "",
 
     Date: "",
-    FileUpload: "",
   });
   const handleInputChange = (event) => {
     setFormData({
@@ -42,7 +42,13 @@ export function PostDealerForm() {
       [event.target.name]: event.target.value,
     });
   };
+  const handleSelect = (e) => {
+    const value = e.target.value;
+    const num = parseInt(value);
 
+    selectedValue(num);
+    console.log(selectValue);
+  };
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(GETCompanies);
@@ -51,16 +57,16 @@ export function PostDealerForm() {
     }
     fetchData();
   }, []);
-  const form = new FormData();
-  form.append("Name", formData.Name);
-  form.append("Price", formData.Price);
-  form.append("CompanyId", formData.CompanyId);
-  form.append("Date", formData.Date);
-  form.append("FileUpload", formData.FileUpload);
+
   const jwt = localStorage.getItem("jwt");
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    const form = new FormData();
+    form.append("Name", formData.Name);
+    form.append("Price", formData.Price);
+    form.append("CompanyId", selectValue);
+    form.append("Date", formData.Date);
+    form.append("FileUpload", image);
     axios
       .post("http://localhost:5200/api/Models", form, {
         headers: {
@@ -69,7 +75,7 @@ export function PostDealerForm() {
         },
       })
       .then((response) => {
-        if (response.status === 204) {
+        if (response.status === 200) {
           // Success!
           toast({
             title: "Data Uploaded Successfully",
@@ -99,7 +105,9 @@ export function PostDealerForm() {
       })
       .catch((err) => {});
   };
-
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
   return (
     <>
       <Box
@@ -139,8 +147,8 @@ export function PostDealerForm() {
               <Select
                 placeholder='Select option'
                 name='CompanyId'
-                value={formData.CompanyId}
-                onChange={handleInputChange}>
+                value={selectValue}
+                onChange={handleSelect}>
                 {company &&
                   company.map((ex) => {
                     return (
@@ -186,9 +194,8 @@ export function PostDealerForm() {
               <Input
                 type='file'
                 name='FileUpload'
-                value={formData.FileUpload}
                 id='file'
-                onChange={handleInputChange}
+                onChange={handleFileChange}
               />
               <InputRightElement width='4.5rem'></InputRightElement>
             </InputGroup>

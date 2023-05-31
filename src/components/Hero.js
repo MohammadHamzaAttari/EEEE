@@ -11,31 +11,33 @@ import {
   IconButton,
   createIcon,
   useColorModeValue,
-  AspectRatio,
+  useDisclosure,
   Input,
+} from "@chakra-ui/react";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { Search } from "./Search";
 import Sell from "../Sell";
 import Research from "./Research";
-import Player, { Video } from "./Video";
-import ReactPlayer from "react-player";
+import AspectRatiofun from "./AspectRatio";
 import { useState } from "react";
 import { SearchResultList } from "./SearchResultList";
 
 export default function CallToActionWithVideo(props) {
-  const Player = () => {
-    return (
-      <ReactPlayer
-        url='../images/hero.mp4'
-        width='100%'
-        height='100%'
-        controls
-      />
-    );
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const handleData = (v) => {
     props.fetch(v);
+  };
+  const Player = () => {
+    onOpen();
   };
   return (
     <Container maxW={"7xl"}>
@@ -120,24 +122,20 @@ export default function CallToActionWithVideo(props) {
           </Heading>
           <Search fetch={handleData} />
 
-          <Stack
-            spacing={{ base: 4, sm: 6 }}
-            direction={{ base: "column", sm: "row" }}>
-            <Tabs colorScheme='red.400'>
-              <TabList>
-                <Tab>Shop New</Tab>
-                <Tab>Shop Used</Tab>
-              </TabList>
-              <TabPanels>
-                <TabPanel></TabPanel>
-                <TabPanel></TabPanel>
-              </TabPanels>
-            </Tabs>
-          </Stack>
           <Sell />
         </Stack>
       </Stack>
       <Research />
+      <Drawer onClose={onClose} isOpen={isOpen} size={"full"}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>ADS Pro Video</DrawerHeader>
+          <DrawerBody>
+            <AspectRatiofun />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Container>
   );
 }

@@ -6,7 +6,7 @@ import Home from "./components/Pages/Home";
 import { Container } from "@chakra-ui/react";
 import DealersHome from "./components/Dealers/DealersHome";
 import Admin from "./components/Admin/Admin";
-import ModelDetails from "./components/Pages/ModelDetails";
+import Models from "./components/Pages/Models";
 import Login from "./components/Registration/Login";
 import RegisterUser from "./components/Registration/RegisterUser";
 import RegisterAdmin from "./components/Registration/RegisterAdmin";
@@ -14,6 +14,7 @@ import RegisterDealer from "./components/Registration/RegisterDealer";
 import DealersPortal from "./components/Dealers/DealersPortal";
 import LoginDealer from "./components/Dealers/LoginDealer";
 import AdminLogin from "./components/Admin/AdminLogin";
+import MDetails from "./components/Pages/MDetails";
 function App() {
   const USER_TYPES = {
     PUBLIC: "Public user",
@@ -31,7 +32,8 @@ function App() {
       <Route path='/' element={<Home fetch={handleData} />} />
 
       <Route path='/login' element={<Login />} />
-      <Route path='/modelDetails' element={<ModelDetails dataId={data} />} />
+      <Route path='/models' element={<Models dataId={data} />} />
+      <Route path='/models/Details' element={<MDetails />} />
 
       <Route path='/registerUser' element={<RegisterUser />} />
 

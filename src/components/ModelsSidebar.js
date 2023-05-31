@@ -15,6 +15,7 @@ import {
   useDisclosure,
   Center,
   Heading,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -25,20 +26,27 @@ import {
   FiMenu,
 } from "react-icons/fi";
 const LinkItems = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
+  { name: "Car", icon: FiHome },
+  { name: "Jeep", icon: FiTrendingUp },
+  { name: "Price", icon: FiCompass },
   { name: "Favourites", icon: FiStar },
   { name: "Settings", icon: FiSettings },
 ];
 
 export default function Sidebar({ data, children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [isLoading, setIsLoading] = React.useState(true);
+  useEffect(() => {
+    setIsLoading(false);
+  }, [data]);
   return (
     <Box minH='100vh' bg={useColorModeValue("gray.100", "gray.900")}>
       <Center mt={"20px"}>
-        <Heading>{data}</Heading>
+        {isLoading ? (
+          <Spinner color='red.500' size={"lg"} />
+        ) : (
+          <Heading>{data}</Heading>
+        )}
       </Center>
       <SidebarContent
         onClose={() => onClose}
@@ -56,10 +64,11 @@ export default function Sidebar({ data, children }) {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
+
       {/* mobilenav */}
       <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p='4'>
-        {children}
+        {(data, children)}
       </Box>
     </Box>
   );
@@ -139,9 +148,11 @@ const MobileNav = ({ onOpen, ...rest }) => {
         icon={<FiMenu />}
       />
 
-      <Text fontSize='2xl' ml='8' fontFamily='monospace' fontWeight='bold'>
-        LOgo
-      </Text>
+      <Text
+        fontSize='2xl'
+        ml='8'
+        fontFamily='monospace'
+        fontWeight='bold'></Text>
     </Flex>
   );
 };

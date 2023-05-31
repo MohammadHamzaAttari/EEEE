@@ -1,14 +1,23 @@
 import React from "react";
-
+import { SimpleGrid, Box, Spinner } from "@chakra-ui/react";
 import CardFun from "./Card";
 export default function ModelsCards(props) {
-  console.log(props.data && props.data.models);
   return (
     <>
-      {props.data &&
-        props.data.models.map((ex) => {
-          return <CardFun name={ex.id} price={ex.price} image={props.image} />;
-        })}
+      <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} spacing={4}>
+        {props.data &&
+          props.data.models.map((ex) => {
+            return (
+              <CardFun
+                key={ex.id}
+                name={ex.name}
+                price={ex.price}
+                image={ex.image}
+                id={ex.id}
+              />
+            );
+          })}
+      </SimpleGrid>
     </>
   );
 }

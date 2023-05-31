@@ -48,12 +48,14 @@ import {
 import { PostDealerForm } from "./PostDealerForm";
 import { useNavigate } from "react-router-dom";
 import PostBody from "./PostBody";
+import DealerTables from "./DealerTables";
+import PostTrims from "./PostTrims";
 
 const LinkItems = [
   { name: "Dashboard", icon: FiHome },
-  { name: "Upload", icon: FiTrendingUp },
-  { name: "Update", icon: FiCompass },
-  { name: "All Models", icon: FiStar },
+  { name: "Model", icon: FiTrendingUp },
+  { name: "Body", icon: FiCompass },
+  { name: "Trims", icon: FiStar },
   { name: "Settings", icon: FiSettings },
 ];
 
@@ -84,6 +86,7 @@ export default function Admin({ children }) {
         <MobileNav onOpen={onOpen} />
         <Box ml={{ base: 0, md: 60 }} p='4'>
           {children}
+          <DealerTables />
         </Box>
       </Box>
     </>
@@ -123,9 +126,11 @@ const NavItem = ({ icon, children, ...rest }) => {
       <Button
         w={"100%"}
         onClick={
-          children == "Upload"
+          children == "Model"
             ? () => onOpen()
-            : children == "Update"
+            : children == "Body"
+            ? () => onOpen()
+            : children == "Trims"
             ? () => onOpen()
             : null
         }>
@@ -160,15 +165,24 @@ const NavItem = ({ icon, children, ...rest }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Post Model Data</ModalHeader>
+          <ModalHeader>
+            {" "}
+            {children == "Model"
+              ? "Post Model Detail"
+              : children == "Body"
+              ? "Post Body Detail"
+              : children == "Trims"
+              ? "Post Trims Detail"
+              : null}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            {children == "Upload" ? (
-              <PostBody />
-            ) : children == "Update" ? (
+            {children == "Model" ? (
               <PostDealerForm />
-            ) : children == "AllModels" ? (
-              <Admin />
+            ) : children == "Body" ? (
+              <PostBody />
+            ) : children == "Trims" ? (
+              <PostTrims />
             ) : null}
           </ModalBody>
         </ModalContent>

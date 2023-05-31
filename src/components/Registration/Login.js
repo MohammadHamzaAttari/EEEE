@@ -39,6 +39,10 @@ export default function Login() {
             duration: 9000,
             isClosable: true,
           });
+          const jwt = response.headers.get("Authorization");
+          const name = response.headers.get("FirstName");
+          localStorage.setItem("jwt", jwt);
+          localStorage.setItem("firstName", name);
           history("/");
         } else {
           // Error!

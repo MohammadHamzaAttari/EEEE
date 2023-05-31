@@ -7,6 +7,7 @@ function Modelshero(props) {
   const data = props.fetch;
   const [result, setResult] = useState();
   const [company, setCompany] = useState();
+
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(
@@ -17,7 +18,7 @@ function Modelshero(props) {
     }
     fetchData();
   }, []);
-  console.log(result);
+
   return (
     <Flex>
       <ModelsSideBar data={result} />

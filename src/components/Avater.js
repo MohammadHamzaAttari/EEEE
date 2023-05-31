@@ -3,6 +3,7 @@ import {
   MenuButton,
   Button,
   Avatar,
+  AvatarBadge,
   MenuList,
   Center,
   MenuDivider,
@@ -11,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function Avater() {
+  const firstName = localStorage.getItem("firstName");
   return (
     <>
       <Menu>
@@ -22,12 +24,13 @@ export default function Avater() {
           minW={0}>
           <Avatar
             size={"sm"}
-            src={"https://avatars.dicebear.com/api/male/username.svg"}
-          />
+            src={"https://avatars.dicebear.com/api/male/username.svg"}>
+            <AvatarBadge boxSize='1.25em' bg='green.500' />
+          </Avatar>
         </MenuButton>
         <MenuList alignItems={"center"}>
           <MenuItem>Logged in as</MenuItem>
-          <MenuItem fontWeight={"bold"}>User</MenuItem>
+          <MenuItem fontWeight={"bold"}>{firstName}</MenuItem>
 
           <MenuDivider />
           <MenuItem>Saved Searches</MenuItem>

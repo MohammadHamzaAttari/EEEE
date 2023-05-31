@@ -17,7 +17,7 @@ import {
   HStack,
   Spinner,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -31,7 +31,12 @@ import Avater from "./Avater";
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const token = localStorage.getItem("jwt");
+  const history = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    history("/Login");
+  };
   return (
     <Box>
       <Flex
@@ -92,30 +97,35 @@ export default function WithSubnavigation() {
           </Button>
 
           <HStack>
-            <Avater />
-            <Button
-              as={"a"}
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={"white"}
-              bg={"red.300"}
-              _hover={{
-                bg: "pink.300",
-              }}>
-              Logout
-            </Button>
+            {token === null ? (
+              <Button
+                as={"a"}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"red.300"}
+                colorScheme='teal'>
+                <Link to='/registerUser'>Register</Link>
+              </Button>
+            ) : (
+              <>
+                <Avater />
+                <Button
+                  as={"a"}
+                  display={{ base: "none", md: "inline-flex" }}
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  color={"white"}
+                  bg={"red.300"}
+                  _hover={{
+                    bg: "pink.300",
+                  }}
+                  onClick={handleLogout}>
+                  Logout
+                </Button>
+              </>
+            )}
           </HStack>
-
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"red.300"}
-            colorScheme='teal'>
-            <Link href='/registerUser'>Register</Link>
-          </Button>
         </Stack>
       </Flex>
 

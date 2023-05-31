@@ -4,7 +4,7 @@ import LargeWithLogoCentered from "../Footer";
 import { Box } from "@chakra-ui/react";
 import Modelshero from "../Modelshero";
 
-export default function ModelDetails(props) {
+export default function Models(props) {
   const data = props.dataId;
 
   return (
