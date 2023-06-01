@@ -127,7 +127,13 @@ const ModelsDetails = () => {
           transform: "translateY(2px)",
           boxShadow: "lg",
         }}>
-        Add to cart
+        <a
+          href='https://secure.2checkout.com/order/checkout.php?PRODS=40863354&QTY=1&CART=1&CARD=2'
+          class='avangate_button'
+          product-code='WL6EEUFCY6'
+          product-quantity='1'>
+          Buy now!
+        </a>
       </Button>
       <Divider marginTop='5' />
     </Container>

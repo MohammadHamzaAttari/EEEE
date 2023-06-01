@@ -125,7 +125,7 @@ export default function CallToActionWithVideo(props) {
           <Sell />
         </Stack>
       </Stack>
-      <Research />
+
       <Drawer onClose={onClose} isOpen={isOpen} size={"full"}>
         <DrawerOverlay />
         <DrawerContent>

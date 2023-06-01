@@ -282,70 +282,31 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [
   {
-    label: "New",
-    children: [
-      {
-        label: "Build and Price",
-        subLabel: "Find the car build and price",
-        href: "#",
-      },
-      {
-        label: "Deal",
-        subLabel: "Find our Best Deals",
-        href: "#",
-      },
-      {
-        label: "New Car Listing",
-        subLabel: "Search more than 1k",
-        href: "#",
-      },
-    ],
+    label: "Companies",
+    href: "/companies",
   },
   {
-    label: "Used",
+    label: "Products",
     children: [
       {
-        label: "Buy online",
-        subLabel: "Buy online Cars with Secure transection",
+        label: "Products",
+        subLabel: "Find All Products",
         href: "#",
       },
       {
-        label: "Used Cars Search",
-        subLabel: "Search more than 1k",
-        href: "#",
-      },
-      {
-        label: "Used Car Listing",
-        subLabel: "View a list of new Cars",
+        label: "Models",
+        subLabel: "Find All Models",
         href: "#",
       },
     ],
   },
-  {
-    label: "Research",
-    children: [
-      {
-        label: "Cars Review",
-        href: "/google",
-      },
-      {
-        label: "Cars Ranking",
-        href: "#",
-      },
-      {
-        label: "Compare Cars",
 
-        href: "#",
-      },
-      {
-        label: "Cars loan Calculator",
-
-        href: "#",
-      },
-    ],
-  },
   {
     label: "Dealers",
     href: "/dealerHome",
+  },
+  {
+    label: "Admin",
+    href: "/registerAdmin/loginAdmin",
   },
 ];

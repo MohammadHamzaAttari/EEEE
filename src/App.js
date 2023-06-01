@@ -15,6 +15,8 @@ import DealersPortal from "./components/Dealers/DealersPortal";
 import LoginDealer from "./components/Dealers/LoginDealer";
 import AdminLogin from "./components/Admin/AdminLogin";
 import MDetails from "./components/Pages/MDetails";
+import Company from "./components/Pages/company";
+
 function App() {
   const USER_TYPES = {
     PUBLIC: "Public user",
@@ -30,7 +32,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Home fetch={handleData} />} />
-
+      <Route path='/companies' element={<Company />} />
       <Route path='/login' element={<Login />} />
       <Route path='/models' element={<Models dataId={data} />} />
       <Route path='/models/Details' element={<MDetails />} />
