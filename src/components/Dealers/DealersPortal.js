@@ -13,6 +13,7 @@ import {
   FormLabel,
   Spacer,
 } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 import {
   IconButton,
@@ -34,6 +35,7 @@ import {
   MenuItem,
   MenuList,
   Image,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -45,6 +47,7 @@ import {
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
+
 import { PostDealerForm } from "./PostDealerForm";
 import { useNavigate } from "react-router-dom";
 import PostBody from "./PostBody";
@@ -147,7 +150,6 @@ const NavItem = ({ icon, children, ...rest }) => {
             color: "white",
           }}
           {...rest}>
-          {console.log("rest " + rest)}
           {icon && (
             <Icon
               mr='4'
@@ -159,14 +161,12 @@ const NavItem = ({ icon, children, ...rest }) => {
             />
           )}
           {children}
-          {console.log("this is from childern" + children)}
         </Flex>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {" "}
             {children == "Model"
               ? "Post Model Detail"
               : children == "Body"
@@ -193,6 +193,7 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
   const history = useNavigate();
+  const { colorMode, toggleColorMode } = useColorMode();
   function handleSignOut() {
     localStorage.clear();
     history("/dealerHome/registerDealer/loginDealer");
@@ -208,6 +209,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}>
+      <Button onClick={toggleColorMode}>
+        {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+      </Button>
       <IconButton
         display={{ base: "flex", md: "none" }}
         onClick={onOpen}

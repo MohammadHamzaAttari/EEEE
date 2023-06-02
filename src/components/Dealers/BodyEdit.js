@@ -21,9 +21,14 @@ import {
 } from "@chakra-ui/react";
 
 import { useToast } from "@chakra-ui/react";
-import { GETCompanies, GETModels, UpdateModels } from "../Constant/url";
+import {
+  GETBodies,
+  GETCompanies,
+  GETModels,
+  UpdateModels,
+} from "../Constant/url";
 
-export default function Upload(props) {
+export default function BodyEdit(props) {
   const toast = useToast();
   const [show, setShow] = React.useState(false);
   const [progress, setProgress] = useState(20);
@@ -32,9 +37,7 @@ export default function Upload(props) {
   const [selectValue, selectedValue] = useState();
   const [formData, setFormData] = useState({
     Name: "",
-    Price: "",
-
-    Date: "",
+    modelId: "",
   });
   const handleInputChange = (event) => {
     setFormData({
@@ -50,7 +53,7 @@ export default function Upload(props) {
   };
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(GETCompanies);
+      const request = await axios.get(GETModels);
 
       setCompany(request.data);
     }
@@ -63,12 +66,11 @@ export default function Upload(props) {
     const form = new FormData();
     form.append("Id", props.id);
     form.append("Name", formData.Name);
-    form.append("Price", formData.Price);
-    form.append("CompanyId", selectValue);
-    form.append("Date", formData.Date);
+    form.append("ModelId", formData.modelId);
+
     form.append("FileUpload", image);
     axios
-      .put(UpdateModels + props.id, form, {
+      .put(GETBodies + props.id, form, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: jwt,
@@ -136,13 +138,13 @@ export default function Upload(props) {
                 name='Name'
                 value={formData.Name}
                 onChange={handleInputChange}
-                placeholder='Model name'
+                placeholder='Body name Car, Mazda...'
               />
             </FormControl>
 
             <FormControl>
               <FormLabel htmlFor='date' fontWeight={"normal"}>
-                Company
+                Model
               </FormLabel>
               <Select
                 placeholder='Select option'
@@ -160,32 +162,7 @@ export default function Upload(props) {
               </Select>
             </FormControl>
           </Flex>
-          <FormControl mr='5%'>
-            <FormLabel htmlFor='price' fontWeight={"normal"}>
-              Price
-            </FormLabel>
-            <Input
-              type='Number'
-              name='Price'
-              id='price'
-              placeholder='$'
-              value={formData.Price}
-              onChange={handleInputChange}
-            />
-            <FormHelperText>Price will be verified</FormHelperText>
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor='date' fontWeight={"normal"}>
-              Manufacturing Date
-            </FormLabel>
-            <Input
-              type='Date'
-              name='Date'
-              id='price'
-              value={formData.Date}
-              onChange={handleInputChange}
-            />
-          </FormControl>
+
           <FormControl>
             <FormLabel htmlFor='file' fontWeight={"normal"} mt='2%'>
               Upload Picture

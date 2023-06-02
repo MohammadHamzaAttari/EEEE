@@ -39,7 +39,7 @@ function PostBody() {
         },
       })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status == 200) {
           // Success!
           toast({
             title: "Data Uploaded Successfully",
@@ -48,7 +48,7 @@ function PostBody() {
             duration: 9000,
             isClosable: true,
           });
-        } else if (response.status === 401) {
+        } else if (response.status == 401 || response.status == 403) {
           toast({
             title: "UnAuthorized",
             description: "You have no access to upload data",
