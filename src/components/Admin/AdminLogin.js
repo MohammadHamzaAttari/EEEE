@@ -39,11 +39,12 @@ export default function AdminLogin() {
           });
           var value = response.headers.get("Authorization");
           var name = response.headers.get("FirstName");
-
+          console.log("Headers name:" + name);
           localStorage.setItem("jwt", value);
           localStorage.setItem("firstName", name);
           history("/admin");
         } else {
+          console.log(response.statusText);
           // Error!
           toast({
             title: "LoggedIn Error.",

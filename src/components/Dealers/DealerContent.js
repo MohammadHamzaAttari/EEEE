@@ -1,6 +1,7 @@
 import React from "react";
 import { SimpleGrid, Box, Spinner } from "@chakra-ui/react";
 import CardFun from "../Card";
+import DealerCard from "./DealerCard";
 export default function DealerContent(props) {
   return (
     <>
@@ -8,15 +9,7 @@ export default function DealerContent(props) {
         {props.data &&
           props.data.models &&
           props.data.models.map((ex) => {
-            return (
-              <CardFun
-                key={ex.id}
-                name={ex.name}
-                price={ex.price}
-                image={ex.image}
-                id={ex.id}
-              />
-            );
+            return <DealerCard />;
           })}
       </SimpleGrid>
     </>
