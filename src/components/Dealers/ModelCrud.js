@@ -1,5 +1,8 @@
+import { IconButton } from "@chakra-ui/react";
+import { PhoneIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import React, { useEffect } from "react";
-import BodyCard from "./BodyCard";
+import axios from "axios";
+
 import {
   Table,
   Thead,
@@ -9,11 +12,10 @@ import {
   Box,
   Th,
   Td,
-  Image,
   TableCaption,
   TableContainer,
   SimpleGrid,
-  IconButton,
+  Image,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -25,53 +27,61 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import axios from "axios";
-import { GETBodies } from "../Constant/url";
-import BodyDelete from "./BodyDelete";
-import BodyEdit from "./BodyEdit";
-function BodyCrud(props) {
+import DeleteModel from "./DeleteModel";
+import { GETModels } from "../Constant/url";
+import Upload from "./UpdateModel";
+
+function ModelCrud(props) {
+  const { onOpen, isOpen, onClose } = useDisclosure();
+  const [models, setModels] = React.useState();
   const [bodies, setBodies] = React.useState();
-  const { onOpen, onClose, isOpen } = useDisclosure();
+  const [trims, setTrims] = React.useState();
   const [editId, setEditId] = React.useState("");
+
   const [deleteId, setDeleteId] = React.useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(GETBodies);
-      setBodies(request.data);
+      const request = await axios.get(GETModels);
+      setModels(request.data);
     }
     fetchData();
   }, []);
   const handleEdit = (e) => {
     setEditId(e);
+
     setDeleteId("");
+
     onOpen();
   };
   const handleDelete = (e) => {
     setDeleteId(e);
+
     setEditId("");
+
     onOpen();
   };
+
   return (
-    <div>
+    <>
       <TableContainer>
         <Table variant='striped' colorScheme='white'>
           <Thead>
             <Tr>
+              <Th>CompanyId</Th>
               <Th>ModelId</Th>
-              <Th>BodyId</Th>
               <Th>Name</Th>
               <Th>Image</Th>
+              <Th isNumeric>Price</Th>
               <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {bodies &&
-              bodies.map((ex) => {
+            {models &&
+              models.map((ex) => {
                 return (
                   <Tr key={ex.id}>
-                    <Td>{ex.modelId}</Td>
+                    <Td>{ex.companyId}</Td>
                     <Td>{ex.id}</Td>
                     <Td>{ex.name}</Td>
                     <Td>
@@ -83,6 +93,7 @@ function BodyCrud(props) {
                         borderRadius='lg'
                       />
                     </Td>
+                    <Td isNumeric>{ex.price}</Td>
                     <Td>
                       <IconButton
                         colorScheme='teal'
@@ -117,16 +128,16 @@ function BodyCrud(props) {
           <ModalCloseButton />
           <ModalBody>
             {editId == "" ? (
-              <BodyDelete id={deleteId} />
+              <DeleteModel id={deleteId} />
             ) : (
-              <BodyEdit id={editId} />
+              <Upload id={editId} />
             )}
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </>
   );
 }
 
-export default BodyCrud;
+export default ModelCrud;

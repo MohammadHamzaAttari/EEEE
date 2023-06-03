@@ -106,10 +106,7 @@ const ModelsDetails = () => {
             marginTop='2'
             color={useColorModeValue("gray.700", "gray.200")}
             fontSize='lg'>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            Please .
           </Text>
           <BlogAuthor name='John Doe' date={new Date("2021-04-06T19:01:27Z")} />
         </Box>

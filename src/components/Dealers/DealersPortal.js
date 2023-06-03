@@ -47,7 +47,7 @@ import {
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
-
+import { Link } from "react-router-dom";
 import { PostDealerForm } from "./PostDealerForm";
 import { useNavigate } from "react-router-dom";
 import PostBody from "./PostBody";
@@ -108,7 +108,13 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h='full'
       {...rest}>
       <Flex h='20' alignItems='center' mx='8' justifyContent='space-between'>
-        <Image src='../../images/index1.png' maxH={"70px"} maxWidth={"100px"} />
+        <Link to='/'>
+          <Image
+            src='../../images/index1.png'
+            maxH={"70px"}
+            maxWidth={"100px"}
+          />
+        </Link>
 
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>

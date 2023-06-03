@@ -1,74 +1,37 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { Form } from "react-router-dom";
 import {
-  Progress,
-  Box,
-  ButtonGroup,
-  Button,
-  Heading,
-  Flex,
   FormControl,
-  GridItem,
-  FormLabel,
+  Button,
   Input,
-  SimpleGrid,
-  InputLeftAddon,
-  InputGroup,
-  Textarea,
-  FormHelperText,
-  InputRightElement,
+  FormLabel,
+  useToast,
   Select,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { GETModels, GETBodies } from "../Constant/url";
+function BodyEdit(props) {
+  const [name, setName] = React.useState("");
+  const [selectValue, selectedValue] = React.useState("");
+  const [upload, setUpload] = React.useState("");
+  const [modelId, setModelId] = React.useState("");
 
-import { useToast } from "@chakra-ui/react";
-import {
-  GETBodies,
-  GETCompanies,
-  GETModels,
-  UpdateModels,
-} from "../Constant/url";
-
-export default function BodyEdit(props) {
-  const toast = useToast();
-  const [show, setShow] = React.useState(false);
-  const [progress, setProgress] = useState(20);
-  const [company, setCompany] = useState();
-  const [image, setImage] = useState();
-  const [selectValue, selectedValue] = useState();
-  const [formData, setFormData] = useState({
-    Name: "",
-    modelId: "",
-  });
-  const handleInputChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
-  const handleSelect = (e) => {
-    const value = e.target.value;
-    const num = parseInt(value);
-
-    selectedValue(num);
-  };
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(GETModels);
 
-      setCompany(request.data);
+      setModelId(request.data);
     }
     fetchData();
   }, []);
-
   const jwt = localStorage.getItem("jwt");
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = new FormData();
-    form.append("Id", props.id);
-    form.append("Name", formData.Name);
-    form.append("ModelId", formData.modelId);
-
-    form.append("FileUpload", image);
+  const toast = useToast();
+  const form = new FormData();
+  form.append("Id", props.id);
+  form.append("Name", name);
+  form.append("ModelId", selectValue);
+  form.append("FileUpload", upload);
+  const handleSubmit = (e) => {
     axios
       .put(GETBodies + props.id, form, {
         headers: {
@@ -77,16 +40,16 @@ export default function BodyEdit(props) {
         },
       })
       .then((response) => {
-        if (response.status === 204) {
+        if (response.status == 204) {
           // Success!
           toast({
-            title: "Success",
-            description: "Data Updated Successfully.",
+            title: "Successfull",
+            description: "Data Updated Successfully",
             status: "success",
             duration: 5000,
             isClosable: true,
           });
-        } else if (response.status === 401) {
+        } else if (response.status == 401 || response.status == 403) {
           toast({
             title: "UnAuthorized",
             description: "You have no access to update data",
@@ -107,80 +70,57 @@ export default function BodyEdit(props) {
       })
       .catch((err) => {});
   };
-  const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleFile = (e) => {
+    console.log(e.target.files);
+    setUpload(e.target.files[0]);
   };
+
   return (
     <>
-      <Box
-        borderWidth='1px'
-        rounded='lg'
-        shadow='1px 1px 3px rgba(0,0,0,0.3)'
-        maxWidth={800}
-        p={6}
-        m='10px auto'
-        as='form'>
-        <Progress
-          hasStripe
-          value={progress}
-          mb='5%'
-          mx='5%'
-          isAnimated></Progress>
-        <form>
-          <Flex>
-            <FormControl mr='5%'>
-              <FormLabel htmlFor='name' fontWeight={"normal"}>
-                Name
-              </FormLabel>
-              <Input
-                type='text'
-                id='name'
-                name='Name'
-                value={formData.Name}
-                onChange={handleInputChange}
-                placeholder='Body name Car, Mazda...'
-              />
-            </FormControl>
-
-            <FormControl>
-              <FormLabel htmlFor='date' fontWeight={"normal"}>
-                Model
-              </FormLabel>
-              <Select
-                placeholder='Select option'
-                name='CompanyId'
-                value={selectValue}
-                onChange={handleSelect}>
-                {company &&
-                  company.map((ex) => {
-                    return (
-                      <option key={ex.id} value={ex.id}>
-                        {ex.name}
-                      </option>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-          </Flex>
-
-          <FormControl>
-            <FormLabel htmlFor='file' fontWeight={"normal"} mt='2%'>
-              Upload Picture
-            </FormLabel>
-            <InputGroup size='md'>
-              <Input
-                type='file'
-                name='FileUpload'
-                id='file'
-                onChange={handleFileChange}
-              />
-              <InputRightElement width='4.5rem'></InputRightElement>
-            </InputGroup>
-          </FormControl>
-
-          <Button onClick={handleSubmit}>Update</Button>
-        </form>
-      </Box>
+      <FormControl mr='5%'>
+        <FormLabel htmlFor='name' fontWeight={"normal"}>
+          Body Name
+        </FormLabel>
+        <Input
+          id='name'
+          placeholder='name'
+          type='text'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel htmlFor='ModelId' fontWeight={"normal"}>
+          Model Id
+        </FormLabel>
+        <Select
+          placeholder='Select option'
+          name='ModelId'
+          value={selectValue}
+          onChange={(e) => {
+            selectedValue(parseInt(e.target.value));
+          }}>
+          {modelId &&
+            modelId.map((ex) => {
+              return (
+                <option key={ex.id} value={ex.id}>
+                  {ex.name}
+                </option>
+              );
+            })}
+        </Select>
+      </FormControl>
+      <FormControl mt='2%'>
+        <FormLabel htmlFor='file' fontWeight={"normal"}>
+          Image Upload
+        </FormLabel>
+        <Input id='file' type='file' onChange={handleFile} />
+      </FormControl>
+      <Button type='submit' onClick={handleSubmit}>
+        Update
+      </Button>
     </>
   );
 }
+
+export default BodyEdit;

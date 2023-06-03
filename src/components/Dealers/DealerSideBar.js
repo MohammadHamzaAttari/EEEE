@@ -25,14 +25,17 @@ import {
   FiSettings,
   FiMenu,
 } from "react-icons/fi";
+import { IoLogoModelS } from "react-icons/io";
+import { BsCarFront } from "react-icons/bs";
+import { AiOutlineDollarCircle } from "react-icons/ai";
 const LinkItems = [
-  { name: "Model", icon: FiHome },
-  { name: "Body", icon: FiTrendingUp },
+  { name: "Model", icon: IoLogoModelS },
+  { name: "Body", icon: BsCarFront },
   { name: "Trims", icon: FiCompass },
-  { name: "Price", icon: FiCompass },
+  { name: "Price", icon: AiOutlineDollarCircle },
 ];
 
-export default function Sidebar({ data, children }) {
+export default function DealerSidebar({ data, children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = React.useState(true);
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function Sidebar({ data, children }) {
         {isLoading ? (
           <Spinner color='red.500' size={"lg"} />
         ) : (
-          <Heading>{data}</Heading>
+          <Heading>All</Heading>
         )}
       </Center>
       <SidebarContent

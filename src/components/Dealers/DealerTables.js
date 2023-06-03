@@ -1,84 +1,37 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Box,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-  SimpleGrid,
-  Image,
-} from "@chakra-ui/react";
-import { IconButton } from "@chakra-ui/react";
-import { PhoneIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import React, { useEffect } from "react";
-import axios from "axios";
 import BodyCard from "./BodyCard";
+import React, { useEffect } from "react";
 import { GETBodies, GETModels, GETTrims } from "../Constant/url";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
-import DeleteModel from "./DeleteModel";
-import Upload from "./UpdateModel";
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  useDisclosure,
+  TableContainer,
+  Box,
+  Button,
 } from "@chakra-ui/react";
-import BodyDelete from "./BodyDelete";
-import BodyEdit from "./BodyEdit";
-import TrimEdit from "./TrimEdit";
-import TrimDelete from "./TrimDelete";
+import ModelCrud from "./ModelCrud";
 import BodyCrud from "./BodyCrud";
-
+import TrimCrud from "./TrimCrud";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Input,
+} from "@chakra-ui/react";
+import DealerDreawer from "./DealerDreawer";
 function DealerTables(props) {
-  const { onOpen, isOpen, onClose } = useDisclosure();
-  const [models, setModels] = React.useState();
-  const [bodies, setBodies] = React.useState();
-  const [trims, setTrims] = React.useState();
-  const [editId, setEditId] = React.useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+  const [models, setModels] = React.useState("");
 
-  const [deleteId, setDeleteId] = React.useState("");
-
-  useEffect(() => {
-    async function fetchData() {
-      const request = await axios.get(GETModels);
-      setModels(request.data);
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      const request = await axios.get(GETTrims);
-      setTrims(request.data);
-    }
-    fetchData();
-  }, []);
-  const handleEdit = (e) => {
-    setEditId(e);
-
-    setDeleteId("");
-
-    onOpen();
-  };
-  const handleDelete = (e) => {
-    setDeleteId(e);
-
-    setEditId("");
-
+  const handleClick = () => {
     onOpen();
   };
   return (
@@ -106,56 +59,7 @@ function DealerTables(props) {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <TableContainer>
-                    <Table variant='striped' colorScheme='white'>
-                      <Thead>
-                        <Tr>
-                          <Th>ModelID</Th>
-                          <Th>Name</Th>
-                          <Th>Image</Th>
-                          <Th isNumeric>Price</Th>
-                          <Th>Action</Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {models &&
-                          models.map((ex) => {
-                            return (
-                              <Tr key={ex.id}>
-                                <Td>{ex.id}</Td>
-                                <Td>{ex.name}</Td>
-                                <Td>
-                                  <Image
-                                    width='70px'
-                                    height='80px'
-                                    src={`data:image/jpeg;base64,${ex.image}`}
-                                    alt='Green double couch with wooden legs'
-                                    borderRadius='lg'
-                                  />
-                                </Td>
-                                <Td isNumeric>{ex.price}</Td>
-                                <Td>
-                                  <IconButton
-                                    colorScheme='teal'
-                                    aria-label='Call Segun'
-                                    size='lg'
-                                    onClick={() => handleEdit(ex.id)}
-                                    icon={<EditIcon />}
-                                  />
-                                  <IconButton
-                                    colorScheme='teal'
-                                    aria-label='Call Segun'
-                                    size='lg'
-                                    onClick={() => handleDelete(ex.id)}
-                                    icon={<DeleteIcon />}
-                                  />
-                                </Td>
-                              </Tr>
-                            );
-                          })}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
+                  <ModelCrud />
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem>
@@ -184,54 +88,7 @@ function DealerTables(props) {
                 </h2>
                 <AccordionPanel pb={4}>
                   <TableContainer>
-                    <Table variant='striped' colorScheme='white'>
-                      <TableCaption placement='top' fontSize={"lg"}>
-                        Trims with Name and Price
-                      </TableCaption>
-                      <Thead>
-                        <Tr>
-                          <Th>ModelID</Th>
-                          <Th>Name</Th>
-                          <Th isNumeric>Price</Th>
-                          <Th>Action</Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {trims &&
-                          trims.map((ex) => {
-                            return (
-                              <Tr key={ex.id}>
-                                <Td>{ex.modelId}</Td>
-                                <Td>{ex.name}</Td>
-                                <Td isNumeric>{ex.price}</Td>
-                                <Td>
-                                  <IconButton
-                                    colorScheme='teal'
-                                    aria-label='Call Segun'
-                                    size='lg'
-                                    onClick={() => handleEdit(ex.id)}
-                                    icon={<EditIcon />}
-                                  />
-                                  <IconButton
-                                    colorScheme='teal'
-                                    aria-label='Call Segun'
-                                    size='lg'
-                                    onClick={() => handleDelete(ex.id)}
-                                    icon={<DeleteIcon />}
-                                  />
-                                </Td>
-                              </Tr>
-                            );
-                          })}
-                      </Tbody>
-                      <Tfoot>
-                        <Tr>
-                          <Th>Serial Number</Th>
-                          <Th>Name</Th>
-                          <Th isNumeric>Price</Th>
-                        </Tr>
-                      </Tfoot>
-                    </Table>
+                    <TrimCrud />
                   </TableContainer>
                 </AccordionPanel>
               </AccordionItem>
@@ -239,26 +96,26 @@ function DealerTables(props) {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-      <Modal
-        onClose={onClose}
-        isOpen={isOpen}
-        colorScheme='whiteAlpha'
-        scrollBehavior
-        size={{ base: "xs", sm: "sm", md: "md", lg: "lg" }}>
-        <ModalOverlay />
 
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
-            {editId == "" ? (
-              <DeleteModel id={deleteId} />
-            ) : (
-              <Upload id={editId} />
-            )}
-          </ModalBody>
-          <ModalFooter></ModalFooter>
-        </ModalContent>
-      </Modal>
+      <Button ref={btnRef} bg='red.400' onClick={onOpen} mt={"25px"}>
+        Show All Models
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        placement='right'
+        size={"ful"}
+        onClose={onClose}
+        finalFocusRef={btnRef}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Models of All Companies</DrawerHeader>
+
+          <DrawerBody>
+            <DealerDreawer fetch={1} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }

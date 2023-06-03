@@ -27,19 +27,21 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import axios from "axios";
-import { GETBodies } from "../Constant/url";
+import { GETBodies, GETTrims } from "../Constant/url";
 import BodyDelete from "./BodyDelete";
 import BodyEdit from "./BodyEdit";
-function BodyCrud(props) {
-  const [bodies, setBodies] = React.useState();
+import TrimDelete from "./TrimDelete";
+import TrimEdit from "./TrimEdit";
+function TrimCrud(props) {
+  const [trims, setTrims] = React.useState();
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [editId, setEditId] = React.useState("");
   const [deleteId, setDeleteId] = React.useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(GETBodies);
-      setBodies(request.data);
+      const request = await axios.get(GETTrims);
+      setTrims(request.data);
     }
     fetchData();
   }, []);
@@ -60,29 +62,21 @@ function BodyCrud(props) {
           <Thead>
             <Tr>
               <Th>ModelId</Th>
-              <Th>BodyId</Th>
+              <Th>TrimId</Th>
               <Th>Name</Th>
-              <Th>Image</Th>
+              <Th>Price</Th>
               <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {bodies &&
-              bodies.map((ex) => {
+            {trims &&
+              trims.map((ex) => {
                 return (
                   <Tr key={ex.id}>
                     <Td>{ex.modelId}</Td>
                     <Td>{ex.id}</Td>
                     <Td>{ex.name}</Td>
-                    <Td>
-                      <Image
-                        width='70px'
-                        height='80px'
-                        src={`data:image/jpeg;base64,${ex.image}`}
-                        alt='Green double couch with wooden legs'
-                        borderRadius='lg'
-                      />
-                    </Td>
+                    <Td>{ex.price}</Td>
                     <Td>
                       <IconButton
                         colorScheme='teal'
@@ -117,9 +111,9 @@ function BodyCrud(props) {
           <ModalCloseButton />
           <ModalBody>
             {editId == "" ? (
-              <BodyDelete id={deleteId} />
+              <TrimDelete id={deleteId} />
             ) : (
-              <BodyEdit id={editId} />
+              <TrimEdit id={editId} />
             )}
           </ModalBody>
           <ModalFooter></ModalFooter>
@@ -129,4 +123,4 @@ function BodyCrud(props) {
   );
 }
 
-export default BodyCrud;
+export default TrimCrud;

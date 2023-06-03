@@ -45,7 +45,7 @@ function PostBody() {
             title: "Data Uploaded Successfully",
             description: "Please Upload More data.",
             status: "success",
-            duration: 9000,
+            duration: 5000,
             isClosable: true,
           });
         } else if (response.status == 401 || response.status == 403) {
@@ -53,7 +53,7 @@ function PostBody() {
             title: "UnAuthorized",
             description: "You have no access to upload data",
             status: "error",
-            duration: 9000,
+            duration: 5000,
             isClosable: true,
           });
         } else {
@@ -62,7 +62,7 @@ function PostBody() {
             title: "LoggedIn Error.",
             description: "Record Not Match.",
             status: "error",
-            duration: 9000,
+            duration: 5000,
             isClosable: true,
           });
         }
@@ -76,7 +76,7 @@ function PostBody() {
   const handleSelect = (e) => {
     const value = e.target.value;
     const num = parseInt(value);
-
+    console.log(num);
     selectedValue(num);
   };
   return (
