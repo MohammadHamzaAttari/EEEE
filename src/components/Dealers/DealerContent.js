@@ -7,9 +7,10 @@ export default function DealerContent(props) {
     <>
       <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} spacing={4}>
         {props.data &&
-          props.data.models &&
-          props.data.models.map((ex) => {
-            return <DealerCard />;
+          props.data.map((ex) => {
+            return (
+              <DealerCard key={ex.id} name={ex.name} modelObj={ex.models} />
+            );
           })}
       </SimpleGrid>
     </>

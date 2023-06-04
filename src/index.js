@@ -6,10 +6,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Kommunicate from "@kommunicate/kommunicate-chatbot-plugin";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-Kommunicate.init("32392e152e019beaf260a555742f87089", {
+/* Kommunicate.init("32392e152e019beaf260a555742f87089", {
   automaticChatOpenOnNavigation: true,
   popupWidget: true,
-});
+}); */
 root.render(
   <Router>
     <ChakraProvider>

@@ -16,6 +16,7 @@ import {
   Center,
   Heading,
   Spinner,
+  Select,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -47,12 +48,13 @@ export default function DealerSidebar({ data, children }) {
         {isLoading ? (
           <Spinner color='red.500' size={"lg"} />
         ) : (
-          <Heading>All</Heading>
+          <Heading>Models</Heading>
         )}
       </Center>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        data={data}
       />
       <Drawer
         autoFocus={false}
@@ -76,7 +78,7 @@ export default function DealerSidebar({ data, children }) {
   );
 }
 
-const SidebarContent = ({ onClose, ...rest }) => {
+const SidebarContent = ({ data, onClose, ...rest }) => {
   return (
     <Box
       bg={useColorModeValue("white", "gray.900")}
@@ -90,7 +92,9 @@ const SidebarContent = ({ onClose, ...rest }) => {
       </Flex>
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
-          {link.name}
+          <Select>
+            <option>{link.name}</option>
+          </Select>
         </NavItem>
       ))}
     </Box>

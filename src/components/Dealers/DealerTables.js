@@ -105,14 +105,14 @@ function DealerTables(props) {
         placement='right'
         size={"ful"}
         onClose={onClose}
-        finalFocusRef={btnRef}>
+        isFullHeight={true}>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent overflow={"scroll"}>
           <DrawerCloseButton />
           <DrawerHeader>Models of All Companies</DrawerHeader>
 
           <DrawerBody>
-            <DealerDreawer fetch={1} />
+            <DealerDreawer />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

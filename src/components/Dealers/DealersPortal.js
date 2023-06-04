@@ -57,8 +57,8 @@ import PostTrims from "./PostTrims";
 const LinkItems = [
   { name: "Dashboard", icon: FiHome },
   { name: "Model", icon: FiTrendingUp },
-  { name: "Body", icon: FiCompass },
-  { name: "Trims", icon: FiStar },
+  { name: "Trims", icon: FiCompass },
+  { name: "Body", icon: FiStar },
   { name: "Settings", icon: FiSettings },
 ];
 

@@ -5,8 +5,7 @@ import { Flex } from "@chakra-ui/react";
 import DealerSidebar from "./DealerSideBar";
 import DealerContent from "./DealerContent";
 import { GETAll } from "../Constant/url";
-function DealerDreawer(props) {
-  const data = props.fetch;
+function DealerDreawer() {
   const [result, setResult] = useState();
   const [company, setCompany] = useState();
 
@@ -15,11 +14,11 @@ function DealerDreawer(props) {
       const request = await axios.get(GETAll);
       setCompany(request.data);
 
-      setResult(request.data.name);
+      setResult(request.data);
     }
     fetchData();
   }, []);
-  console.log(company && company);
+  console.log(result && result);
   return (
     <Flex>
       <DealerSidebar data={result} />

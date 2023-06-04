@@ -1,4 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Highlight,
+  SimpleGrid,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+} from "@chakra-ui/react";
 import {
   Box,
   Heading,
@@ -14,44 +31,51 @@ import {
   Container,
   VStack,
   Button,
+  Select,
 } from "@chakra-ui/react";
 import WithSubnavigation from "./navbar";
-
-const BlogTags = (props) => {
-  return (
-    <HStack spacing={2} marginTop={props.marginTop}>
-      {props.tags.map((tag) => {
-        return (
-          <Tag size={"md"} variant='solid' colorScheme='orange' key={tag}>
-            {tag}
-          </Tag>
-        );
-      })}
-    </HStack>
-  );
-};
-
-export const BlogAuthor = (props) => {
-  return (
-    <HStack marginTop='2' spacing='2' display='flex' alignItems='center'>
-      <Image
-        borderRadius='full'
-        boxSize='40px'
-        src='https://100k-faces.glitch.me/random-image'
-        alt={`Avatar of ${props.name}`}
-      />
-      <Text fontWeight='medium'>{props.name}</Text>
-      <Text>—</Text>
-      <Text>{props.date.toLocaleDateString()}</Text>
-    </HStack>
-  );
-};
-
+import BodyCard from "./Dealers/BodyCard";
+import axios from "axios";
+import { GETAll, UpdateModels } from "./Constant/url";
+import PriceTable from "./PriceTable";
 const ModelsDetails = () => {
   const image = localStorage.getItem("modelImageForDetails");
+  const modelName = localStorage.getItem("modelname");
+  const modelId = localStorage.getItem("modelIdForDetails");
+  const modelPrice = localStorage.getItem("modelprice");
+  const [selectValue, selectedValue] = React.useState("");
+  const [selectTrim, selectedTrim] = React.useState("");
+  const [trimName, setTrimName] = React.useState("");
+  const [models, setModels] = React.useState("");
+  const [trimPrice, setTrimPrice] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(true);
+  useEffect(() => {
+    async function fetchData() {
+      const request = await axios.get(UpdateModels + modelId);
+      setModels(request.data);
+    }
+    fetchData();
+  }, []);
+
+  const handleSelect = (e) => {
+    const value = e.target.value;
+    const num = parseInt(value);
+
+    selectedValue(num);
+    console.log();
+  };
+  const handleSelectTrim = (e) => {
+    const value = e.target.value;
+    const num = parseInt(value);
+    const trim = models.trims && models.trims.find((e) => e.id === num);
+    setTrimPrice(trim.price);
+    setTrimName(trim.name);
+    selectedTrim(num);
+  };
+
   return (
     <Container maxW={"7xl"} p='12'>
-      <Heading as='h1'>Select Body And Trim</Heading>
+      <Heading as='h1'>{modelName}</Heading>
       <Box
         marginTop={{ base: "1", sm: "5" }}
         display='flex'
@@ -95,10 +119,9 @@ const ModelsDetails = () => {
           flexDirection='column'
           justifyContent='center'
           marginTop={{ base: "3", sm: "0" }}>
-          <BlogTags tags={["Engineering", "Product"]} />
           <Heading marginTop='1'>
             <Link textDecoration='none' _hover={{ textDecoration: "none" }}>
-              Blog article title
+              Overview
             </Link>
           </Heading>
           <Text
@@ -106,11 +129,123 @@ const ModelsDetails = () => {
             marginTop='2'
             color={useColorModeValue("gray.700", "gray.200")}
             fontSize='lg'>
-            Please .
+            One of the most popular cars in the Pakistan, the {modelName}{" "}
+            delivers economy, reliability, comfort, and safety among its many
+            virtues. But the "secret sauce" that separates it from most other
+            compact cars is that it provides more driving enjoyment than basic
+            low-cost transportation. That fun-to-drive character is exemplified
+            this year by a new Type R variant. The good news, though, is you
+            don't have to buy the Type R to get a high level of entertainment.
+            One reason the Civic is fun to drive is its compact size. Both the
+            sedan and hatchback models have reasonably small footprints, but
+            also deliver a lot of interior space. The current-generation Civic
+            sedan is exactly the same height and less than 2 inches longer than
+            the previous generation.
           </Text>
-          <BlogAuthor name='John Doe' date={new Date("2021-04-06T19:01:27Z")} />
         </Box>
       </Box>
+      <Heading as='h1' pt='12' pb='12'>
+        Available Types
+      </Heading>
+      <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} spacing={10}>
+        {models.bodies &&
+          models.bodies.map((ex) => {
+            return (
+              <Card>
+                <CardHeader p={0} h={"80%"}>
+                  <Image src={`data:image/jpeg;Base64,${ex.image}`} />
+                </CardHeader>
+                <CardFooter h={"20%"}>{ex.name}</CardFooter>
+              </Card>
+            );
+          })}
+      </SimpleGrid>
+      <Heading as='h1' pt='12' pb='12'>
+        Select Body or Type
+      </Heading>
+      <Select
+        placeholder='Select option'
+        name='body'
+        value={selectValue}
+        onChange={handleSelect}>
+        {models &&
+          models.bodies &&
+          models.bodies.map((ex) => {
+            return (
+              <option key={ex.id} value={ex.id}>
+                {ex.name}
+              </option>
+            );
+          })}
+      </Select>
+      <Heading as='h1' pt='12' pb='12'>
+        Select Trim
+      </Heading>
+      <Select
+        placeholder='Select option'
+        name='body'
+        value={selectTrim}
+        onChange={handleSelectTrim}>
+        {models &&
+          models.trims &&
+          models.trims.map((ex) => {
+            return (
+              <option key={ex.id} value={ex.id}>
+                {ex.name}
+              </option>
+            );
+          })}
+      </Select>
+      <Heading as='h1' pt='12' pb='12'>
+        Estimated Price
+      </Heading>
+      <TableContainer>
+        <Table variant='simple'>
+          <TableCaption color='red.500' fontWeight={"bold"}>
+            Price Calculation By ADS
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Model</Th>
+              <Th>Price</Th>
+              <Th>Trim</Th>
+              <Th>Price</Th>
+              <Th isNumeric>Sum</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>{modelName}</Td>
+              <Td>{modelPrice}</Td>
+              <Td>{trimName}</Td>
+              <Td>{trimPrice}</Td>
+              <Td isNumeric>{parseInt(trimPrice) + parseInt(modelPrice)}</Td>
+            </Tr>
+          </Tbody>
+          <Tfoot>
+            <Tr>
+              <Th>Model</Th>
+              <Th>Price</Th>
+              <Th>Trim</Th>
+              <Th>Price</Th>
+              <Th isNumeric>GrandTotal*(excludedTax)</Th>
+            </Tr>
+            <Tr>
+              <Td></Td>
+              <Td></Td>
+              <Td></Td>
+
+              <Td color='green.500' fontWeight={"bold"}>
+                Dealer Discount 500
+              </Td>
+
+              <Td isNumeric color={"green.500"} fontWeight={"bold"}>
+                {parseInt(trimPrice) + parseInt(modelPrice) - 500}
+              </Td>
+            </Tr>
+          </Tfoot>
+        </Table>
+      </TableContainer>
       <Button
         rounded={"none"}
         w={"full"}
@@ -124,13 +259,7 @@ const ModelsDetails = () => {
           transform: "translateY(2px)",
           boxShadow: "lg",
         }}>
-        <a
-          href='https://secure.2checkout.com/order/checkout.php?PRODS=40863354&QTY=1&CART=1&CARD=2'
-          class='avangate_button'
-          product-code='WL6EEUFCY6'
-          product-quantity='1'>
-          Buy now!
-        </a>
+        Buy now!
       </Button>
       <Divider marginTop='5' />
     </Container>
