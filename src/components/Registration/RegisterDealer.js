@@ -14,13 +14,13 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-export default function RegisterDealer() {
-  const { isLoading, setIsLoading } = useState(false);
+export default function RegisterUser() {
+  const { error, setError } = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,11 +30,6 @@ export default function RegisterDealer() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
-  const handleChange = (event) => {
-    setValidEmail(
-      email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) ? true : false
-    );
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +40,11 @@ export default function RegisterDealer() {
       Email: email,
       PhoneNumber: phoneNumber,
     };
-
+    const handleError = (value) => {
+      if (value.response.status === 400) {
+        console.log(value.response.data.error);
+      }
+    };
     fetch("http://localhost:5200/api/Account/registerDealer", {
       method: "POST",
       mode: "cors",
@@ -65,8 +64,10 @@ export default function RegisterDealer() {
             isClosable: true,
           });
           navigate("/dealerHome/registerDealer/loginDealer");
+          response.json();
         } else {
           // Error!
+          console.log(JSON.stringify(response.body));
           toast({
             title: "Account not created.",
             description: "We can not created your account for you.",
@@ -76,6 +77,7 @@ export default function RegisterDealer() {
           });
         }
       })
+
       .catch((err) => {});
   };
   return (
@@ -87,10 +89,10 @@ export default function RegisterDealer() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Dealer
+            Register
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Register to Get Worldwide Client
+            to enjoy all of our cool features ✌️
           </Text>
         </Stack>
         <Box
@@ -127,7 +129,7 @@ export default function RegisterDealer() {
                 <Input
                   type='email'
                   value={email}
-                  onChange={(e) => setEmail(e.target.value) && handleChange}
+                  onChange={(e) => setEmail(e.target.value)}
                   className={`form-control ${!validEmail ? "is-invalid" : ""}`}
                 />
               </FormControl>
@@ -167,8 +169,7 @@ export default function RegisterDealer() {
                   _hover={{
                     bg: "blue.500",
                   }}
-                  onClick={handleSubmit}
-                  isLoading={isLoading}>
+                  onClick={handleSubmit}>
                   Register
                 </Button>
               </Stack>
@@ -177,7 +178,7 @@ export default function RegisterDealer() {
                   Already a user?{" "}
                   <Link
                     to={"/dealerHome/registerDealer/loginDealer"}
-                    style={{ color: "blue", underline: "true" }}>
+                    color={"blue.400"}>
                     Login
                   </Link>
                 </Text>
