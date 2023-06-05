@@ -13,6 +13,8 @@ import {
   FormLabel,
   Spacer,
 } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import PostAdmin from "./PostAdmin";
 
 import {
   IconButton,
@@ -34,6 +36,7 @@ import {
   MenuItem,
   MenuList,
   Image,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -45,15 +48,18 @@ import {
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
-import TableF from "./Table";
-import PostAdmin from "./PostAdmin";
+import { Link } from "react-router-dom";
+import { PostDealerForm } from "./PostDealerForm";
 import { useNavigate } from "react-router-dom";
+import PostBody from "./PostBody";
+import DealerTables from "./DealerTables";
+import PostTrims from "./PostTrims";
 
 const LinkItems = [
-  { name: "Dashboard", icon: FiHome },
-  { name: "Companies", icon: FiTrendingUp },
-  { name: "Users", icon: FiCompass },
-  { name: "Orders", icon: FiStar },
+  { name: "Company", icon: FiHome },
+  { name: "Model", icon: FiTrendingUp },
+  { name: "Trims", icon: FiCompass },
+  { name: "Body", icon: FiStar },
   { name: "Settings", icon: FiSettings },
 ];
 
@@ -84,6 +90,7 @@ export default function Admin({ children }) {
         <MobileNav onOpen={onOpen} />
         <Box ml={{ base: 0, md: 60 }} p='4'>
           {children}
+          <DealerTables />
         </Box>
       </Box>
     </>
@@ -102,7 +109,13 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h='full'
       {...rest}>
       <Flex h='20' alignItems='center' mx='8' justifyContent='space-between'>
-        <Image src='../../images/index1.png' maxH={"70px"} maxWidth={"100px"} />
+        <Link to='/'>
+          <Image
+            src='../../images/index1.png'
+            maxH={"70px"}
+            maxWidth={"100px"}
+          />
+        </Link>
 
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -122,7 +135,17 @@ const NavItem = ({ icon, children, ...rest }) => {
     <>
       <Button
         w={"100%"}
-        onClick={children == "Companies" ? () => onOpen() : () => onClose()}>
+        onClick={
+          children == "Company"
+            ? () => onOpen()
+            : children == "Model"
+            ? () => onOpen()
+            : children == "Body"
+            ? () => onOpen()
+            : children == "Trims"
+            ? () => onOpen()
+            : null
+        }>
         <Flex
           align='center'
           p='4'
@@ -136,7 +159,6 @@ const NavItem = ({ icon, children, ...rest }) => {
             color: "white",
           }}
           {...rest}>
-          {console.log("rest " + rest)}
           {icon && (
             <Icon
               mr='4'
@@ -148,16 +170,31 @@ const NavItem = ({ icon, children, ...rest }) => {
             />
           )}
           {children}
-          {console.log("this is from childern" + children)}
         </Flex>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Post AutoMobile Model Data</ModalHeader>
+          <ModalHeader>
+            {children == "Model"
+              ? "Post Model Detail"
+              : children == "Body"
+              ? "Post Body Detail"
+              : children == "Trims"
+              ? "Post Trims Detail"
+              : null}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <PostAdmin />
+            {children == "Company" ? (
+              <PostAdmin />
+            ) : children == "Model" ? (
+              <PostDealerForm />
+            ) : children == "Body" ? (
+              <PostBody />
+            ) : children == "Trims" ? (
+              <PostTrims />
+            ) : null}
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -167,9 +204,10 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
   const history = useNavigate();
+  const { colorMode, toggleColorMode } = useColorMode();
   function handleSignOut() {
     localStorage.clear();
-    history("/registerAdmin/loginAdmin");
+    history("/dealerHome/registerDealer/loginDealer");
   }
   return (
     <Flex
@@ -182,6 +220,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}>
+      <Button onClick={toggleColorMode}>
+        {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+      </Button>
       <IconButton
         display={{ base: "flex", md: "none" }}
         onClick={onOpen}

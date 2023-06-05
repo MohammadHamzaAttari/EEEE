@@ -16,6 +16,7 @@ import LoginDealer from "./components/Dealers/LoginDealer";
 import AdminLogin from "./components/Admin/AdminLogin";
 import MDetails from "./components/Pages/MDetails";
 import Company from "./components/Pages/company";
+import CreditCardForm from "./components/CreditCard";
 
 function App() {
   const USER_TYPES = {
@@ -36,7 +37,7 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='/models' element={<Models dataId={data} />} />
       <Route path='/models/Details' element={<MDetails />} />
-
+      <Route path='/models/Details/creditCard' element={<CreditCardForm />} />
       <Route path='/registerUser' element={<RegisterUser />} />
 
       <Route path='/dealerHome' element={<DealersHome />} />

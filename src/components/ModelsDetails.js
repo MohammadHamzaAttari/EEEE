@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   Thead,
@@ -6,11 +7,11 @@ import {
   Tfoot,
   Tr,
   Th,
+  SimpleGrid,
   Td,
   TableCaption,
   TableContainer,
   Highlight,
-  SimpleGrid,
   Card,
   CardBody,
   CardHeader,
@@ -44,11 +45,13 @@ const ModelsDetails = () => {
   const modelId = localStorage.getItem("modelIdForDetails");
   const modelPrice = localStorage.getItem("modelprice");
   const [selectValue, selectedValue] = React.useState("");
+  const [selectbody, setSelectBody] = React.useState("");
   const [selectTrim, selectedTrim] = React.useState("");
   const [trimName, setTrimName] = React.useState("");
   const [models, setModels] = React.useState("");
   const [trimPrice, setTrimPrice] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(UpdateModels + modelId);
@@ -72,7 +75,9 @@ const ModelsDetails = () => {
     setTrimName(trim.name);
     selectedTrim(num);
   };
-
+  const handleBtnClick = () => {
+    navigate("/models/Details/creditCard");
+  };
   return (
     <Container maxW={"7xl"} p='12'>
       <Heading as='h1'>{modelName}</Heading>
@@ -255,6 +260,7 @@ const ModelsDetails = () => {
         bg={useColorModeValue("gray.900", "gray.50")}
         color={useColorModeValue("white", "gray.900")}
         textTransform={"uppercase"}
+        onClick={handleBtnClick}
         _hover={{
           transform: "translateY(2px)",
           boxShadow: "lg",
