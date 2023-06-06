@@ -33,6 +33,7 @@ import {
   VStack,
   Button,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import WithSubnavigation from "./navbar";
 import BodyCard from "./Dealers/BodyCard";
@@ -40,12 +41,14 @@ import axios from "axios";
 import { GETAll, UpdateModels } from "./Constant/url";
 import PriceTable from "./PriceTable";
 const ModelsDetails = () => {
+  const toast = useToast();
   const image = localStorage.getItem("modelImageForDetails");
   const modelName = localStorage.getItem("modelname");
   const modelId = localStorage.getItem("modelIdForDetails");
   const modelPrice = localStorage.getItem("modelprice");
   const [selectValue, selectedValue] = React.useState("");
-  const [selectbody, setSelectBody] = React.useState("");
+  const [selectBodyImage, setSelectBodyImage] = React.useState("");
+  const [selectBodyName, setSelectBodyName] = React.useState("");
   const [selectTrim, selectedTrim] = React.useState("");
   const [trimName, setTrimName] = React.useState("");
   const [models, setModels] = React.useState("");
@@ -63,9 +66,11 @@ const ModelsDetails = () => {
   const handleSelect = (e) => {
     const value = e.target.value;
     const num = parseInt(value);
-
+    const bodies = models.bodies && models.bodies.find((e) => e.id === num);
+    localStorage.setItem("selectBodyName", bodies.name);
+    localStorage.setItem("selectBodyImage", bodies.image);
     selectedValue(num);
-    console.log();
+    console.log(bodies.name);
   };
   const handleSelectTrim = (e) => {
     const value = e.target.value;
@@ -74,9 +79,24 @@ const ModelsDetails = () => {
     setTrimPrice(trim.price);
     setTrimName(trim.name);
     selectedTrim(num);
+    localStorage.removeItem("selectTrimPrice");
+    localStorage.setItem("selectTrimPrice", trim.price);
+    localStorage.removeItem("selectTrimName");
+    localStorage.setItem("selectTrimName", trim.name);
   };
   const handleBtnClick = () => {
-    navigate("/models/Details/creditCard");
+    const jwt = localStorage.getItem("jwt");
+    if (jwt == null) {
+      toast({
+        title: "Account",
+        description: "Please Create Account",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } else {
+      navigate("/models/Details/creditCard");
+    }
   };
   return (
     <Container maxW={"7xl"} p='12'>
@@ -265,7 +285,7 @@ const ModelsDetails = () => {
           transform: "translateY(2px)",
           boxShadow: "lg",
         }}>
-        Buy now!
+        Book now!
       </Button>
       <Divider marginTop='5' />
     </Container>

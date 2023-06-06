@@ -66,11 +66,9 @@ export default function RegisterUser() {
           navigate("/login");
           response.json();
         } else {
-          // Error!
-          console.log(JSON.stringify(response.body));
           toast({
-            title: "Account not created.",
-            description: "We can not created your account for you.",
+            title: "Validation Error/s",
+            description: "See network tab for Details",
             status: "error",
             duration: 9000,
             isClosable: true,
@@ -78,7 +76,9 @@ export default function RegisterUser() {
         }
       })
 
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
   return (
     <Flex

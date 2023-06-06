@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import ModelCrud from "./ModelCrud";
 import BodyCrud from "./BodyCrud";
+import CompanyCrud from "./CompanyCrud";
 import TrimCrud from "./TrimCrud";
 import {
   Drawer,
@@ -48,6 +49,20 @@ function DealerTables(props) {
           </h2>
           <AccordionPanel pb={4}>
             <Accordion defaultIndex={[0]} allowMultiple bg='blackAlpha.200'>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton
+                    _expanded={{ bg: "red.400", color: "white" }}>
+                    <Box as='span' flex='1' textAlign='left'>
+                      Manage Companies
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <CompanyCrud />
+                </AccordionPanel>
+              </AccordionItem>
               <AccordionItem>
                 <h2>
                   <AccordionButton

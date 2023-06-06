@@ -1,4 +1,5 @@
 export const GETCompanies = "http://localhost:5200/api/Companies";
+export const CrudCompanies = "http://localhost:5200/api/Companies/";
 export const GETModels = "http://localhost:5200/api/Models";
 export const DeleteModels = "http://localhost:5200/api/Models/";
 export const UpdateModels = "http://localhost:5200/api/Models/";
@@ -7,3 +8,8 @@ export const GETBodies = "http://localhost:5200/api/Bodies/";
 export const GETTrims = "http://localhost:5200/api/Trims";
 export const UpdateTrims = "http://localhost:5200/api/Trims/";
 export const GETAll = "http://localhost:5200/api/Companies/All";
+export const GETUSERS = "http://localhost:5200/api/Account/register";
+export const DeleteUser = "http://localhost:5200/api/Account/";
+export const Booking = "http://localhost:5200/api/Booking";
+export const GETBooking = "http://localhost:5200/api/Booking";
+export const GETContact = "http://localhost:5200/api/Contact";

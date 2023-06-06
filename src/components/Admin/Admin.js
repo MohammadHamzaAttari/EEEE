@@ -54,13 +54,17 @@ import { useNavigate } from "react-router-dom";
 import PostBody from "./PostBody";
 import DealerTables from "./DealerTables";
 import PostTrims from "./PostTrims";
+import Users from "./Users";
+import Booking from "./Booking";
 
 const LinkItems = [
   { name: "Company", icon: FiHome },
   { name: "Model", icon: FiTrendingUp },
   { name: "Trims", icon: FiCompass },
   { name: "Body", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "Users", icon: FiSettings },
+  { name: "Booking", icon: FiStar },
+  { name: "Feedbacks", icon: FiStar },
 ];
 
 export default function Admin({ children }) {
@@ -144,6 +148,12 @@ const NavItem = ({ icon, children, ...rest }) => {
             ? () => onOpen()
             : children == "Trims"
             ? () => onOpen()
+            : children == "Users"
+            ? () => onOpen()
+            : children == "Booking"
+            ? () => onOpen()
+            : children == "Feedbacks"
+            ? () => onOpen()
             : null
         }>
         <Flex
@@ -172,7 +182,7 @@ const NavItem = ({ icon, children, ...rest }) => {
           {children}
         </Flex>
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size='full'>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -182,6 +192,12 @@ const NavItem = ({ icon, children, ...rest }) => {
               ? "Post Body Detail"
               : children == "Trims"
               ? "Post Trims Detail"
+              : children == "Users"
+              ? "All Users List"
+              : children == "Booking"
+              ? "AutoMobiles Booking List"
+              : children == "Feedbacks"
+              ? "AutoMobiles FeedBack List"
               : null}
           </ModalHeader>
           <ModalCloseButton />
@@ -194,6 +210,12 @@ const NavItem = ({ icon, children, ...rest }) => {
               <PostBody />
             ) : children == "Trims" ? (
               <PostTrims />
+            ) : children == "Users" ? (
+              <Users />
+            ) : children == "Booking" ? (
+              <Booking />
+            ) : children == "Feedbacks" ? (
+              <Booking />
             ) : null}
           </ModalBody>
         </ModalContent>

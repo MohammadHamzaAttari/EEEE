@@ -41,8 +41,10 @@ export default function Login() {
           });
           const jwt = response.headers.get("Authorization");
           const name = response.headers.get("FirstName");
+          const userId = response.headers.get("UserId");
           localStorage.setItem("jwt", jwt);
           localStorage.setItem("firstName", name);
+          localStorage.setItem("userId", userId);
           history("/");
         } else {
           // Error!

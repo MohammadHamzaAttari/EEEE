@@ -17,14 +17,10 @@ import AdminLogin from "./components/Admin/AdminLogin";
 import MDetails from "./components/Pages/MDetails";
 import Company from "./components/Pages/company";
 import CreditCardForm from "./components/CreditCard";
+import Booking from "./components/Pages/Booking";
+import About from "./components/About";
 
 function App() {
-  const USER_TYPES = {
-    PUBLIC: "Public user",
-    NORMAL_USER: "Normal user",
-    ADMIN_USER: "Admin user",
-  };
-  const CURRENT_USER_TYPE = USER_TYPES.PUBLIC;
   const [data, setData] = useState();
   const handleData = (v) => {
     setData(v);
@@ -35,9 +31,10 @@ function App() {
       <Route path='/' element={<Home fetch={handleData} />} />
       <Route path='/companies' element={<Company />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/contact' element={<About />} />
       <Route path='/models' element={<Models dataId={data} />} />
       <Route path='/models/Details' element={<MDetails />} />
-      <Route path='/models/Details/creditCard' element={<CreditCardForm />} />
+      <Route path='/models/Details/creditCard' element={<Booking />} />
       <Route path='/registerUser' element={<RegisterUser />} />
 
       <Route path='/dealerHome' element={<DealersHome />} />
