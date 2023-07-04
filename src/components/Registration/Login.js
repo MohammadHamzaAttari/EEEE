@@ -21,16 +21,19 @@ export default function Login() {
   const store = { Email: email, Password: password };
   const toast = useToast();
   const handleSignIn = () => {
-    fetch("http://localhost:5200/api/Account/login", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(store),
-    })
+    fetch(
+      "https://public.herotofu.com/v1/42ef0a30-1a4d-11ee-a6b0-17653bd30bd3",
+      {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(store),
+      }
+    )
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 204) {
           // Success!
           toast({
             title: "Account LoggedIn.",
@@ -64,18 +67,18 @@ export default function Login() {
       <Flex p={8} flex={1} align={"center"} justify={"center"}>
         <Stack spacing={4} w={"full"} maxW={"md"}>
           <Heading fontSize={"2xl"}>Sign in to your account</Heading>
-          <FormControl id='email'>
+          <FormControl id="email">
             <FormLabel>Email address</FormLabel>
             <Input
-              type='email'
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
-          <FormControl id='password'>
+          <FormControl id="password">
             <FormLabel>Password</FormLabel>
             <Input
-              type='password'
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -84,14 +87,16 @@ export default function Login() {
             <Stack
               direction={{ base: "column", sm: "row" }}
               align={"start"}
-              justify={"space-between"}>
+              justify={"space-between"}
+            >
               <Checkbox>Remember me</Checkbox>
               <Link color={"blue.500"}>Forgot password?</Link>
             </Stack>
             <Button
               colorScheme={"blue"}
               variant={"solid"}
-              onClick={handleSignIn}>
+              onClick={handleSignIn}
+            >
               Sign in
             </Button>
           </Stack>

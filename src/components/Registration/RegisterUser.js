@@ -54,7 +54,7 @@ export default function RegisterUser() {
       body: JSON.stringify(store),
     })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 204) {
           // Success!
           toast({
             title: "Account created.",
@@ -85,7 +85,8 @@ export default function RegisterUser() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}>
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
@@ -99,41 +100,42 @@ export default function RegisterUser() {
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
-          p={8}>
+          p={8}
+        >
           <Stack spacing={4}>
             <form>
               <HStack>
                 <Box>
-                  <FormControl id='firstName' isRequired>
+                  <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
                     <Input
-                      type='text'
+                      type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                     />
                   </FormControl>
                 </Box>
                 <Box>
-                  <FormControl id='lastName'>
+                  <FormControl id="lastName">
                     <FormLabel>Last Name</FormLabel>
                     <Input
-                      type='text'
+                      type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                     />
                   </FormControl>
                 </Box>
               </HStack>
-              <FormControl id='email' isRequired>
+              <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
-                  type='email'
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={`form-control ${!validEmail ? "is-invalid" : ""}`}
                 />
               </FormControl>
-              <FormControl id='password' isRequired>
+              <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
@@ -146,30 +148,32 @@ export default function RegisterUser() {
                       variant={"ghost"}
                       onClick={() =>
                         setShowPassword((showPassword) => !showPassword)
-                      }>
+                      }
+                    >
                       {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              <FormControl id='phone' isRequired>
+              <FormControl id="phone" isRequired>
                 <FormLabel>PhoneNumber</FormLabel>
                 <Input
-                  type='phone'
+                  type="phone"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
-                  loadingText='Submitting'
-                  size='lg'
+                  loadingText="Submitting"
+                  size="lg"
                   bg={"blue.400"}
                   color={"white"}
                   _hover={{
                     bg: "blue.500",
                   }}
-                  onClick={handleSubmit}>
+                  onClick={handleSubmit}
+                >
                   Register
                 </Button>
               </Stack>
